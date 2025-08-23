@@ -1,0 +1,343 @@
+# .NET 8 WITSML SOAP Client Sample Implementation
+
+## Project Structure
+```
+src/WitsmlClient/
+├── WitsmlClient.csproj
+├── WitsmlConnection.cs
+├── WitsmlServiceClient.cs
+├── Authentication/
+│   └── BasicAuthHandler.cs
+├── Compression/
+│   └── GzipMessageHandler.cs
+├── Generated/
+│   └── (SOAP proxy from svcutil)
+└── Models/
+    └── ConnectionSettings.cs
+```
+
+## 1. WitsmlClient.csproj
+```xml
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.ServiceModel.Http" Version="8.0.0" />
+    <PackageReference Include="System.ServiceModel.Primitives" Version="8.0.0" />
+    <PackageReference Include="System.ServiceModel.Security" Version="8.0.0" />
+  </ItemGroup>
+</Project>
+```
+
+## 2. WitsmlServiceClient.cs
+```csharp
+using System;
+using System.ServiceModel;
+using System.ServiceModel.Channels;
+using System.Threading.Tasks;
+
+namespace WitsmlClient;
+
+public class WitsmlServiceClient : IDisposable
+{
+    private readonly ChannelFactory<IWitsmlService> _channelFactory;
+    private IWitsmlService? _channel;
+    private readonly ConnectionSettings _settings;
+
+    public WitsmlServiceClient(ConnectionSettings settings)
+    {
+        _settings = settings;
+        
+        // Create binding with SOAP 1.1
+        var binding = CreateBinding();
+        
+        // Create endpoint
+        var endpoint = new EndpointAddress(settings.Uri);
+        
+        // Create channel factory
+        _channelFactory = new ChannelFactory<IWitsmlService>(binding, endpoint);
+        
+        // Add authentication
+        if (!string.IsNullOrEmpty(settings.Username))
+        {
+            _channelFactory.Credentials.UserName.UserName = settings.Username;
+            _channelFactory.Credentials.UserName.Password = settings.Password;
+        }
+    }
+
+    private BasicHttpBinding CreateBinding()
+    {
+        var binding = new BasicHttpBinding
+        {
+            MaxReceivedMessageSize = int.MaxValue,
+            MaxBufferSize = int.MaxValue,
+            SendTimeout = TimeSpan.FromMinutes(5),
+            ReceiveTimeout = TimeSpan.FromMinutes(5),
+            Security = new BasicHttpSecurity
+            {
+                Mode = _settings.Uri.StartsWith("https") 
+                    ? BasicHttpSecurityMode.Transport 
+                    : BasicHttpSecurityMode.None
+            }
+        };
+
+        // Enable GZIP compression if requested
+        if (_settings.EnableCompression)
+        {
+            binding.TransferMode = TransferMode.Buffered;
+            // Note: Custom message encoder needed for GZIP
+        }
+
+        return binding;
+    }
+
+    public async Task<GetFromStoreResponse> GetFromStoreAsync(
+        string objectType, 
+        string xmlIn, 
+        string? optionsIn = null)
+    {
+        EnsureChannel();
+        
+        var request = new GetFromStoreRequest
+        {
+            WMLtypeIn = objectType,
+            QueryIn = xmlIn,
+            OptionsIn = optionsIn ?? string.Empty,
+            CapabilitiesIn = string.Empty
+        };
+
+        return await _channel!.GetFromStoreAsync(request);
+    }
+
+    public async Task<AddToStoreResponse> AddToStoreAsync(
+        string objectType,
+        string xmlIn,
+        string? optionsIn = null)
+    {
+        EnsureChannel();
+        
+        var request = new AddToStoreRequest
+        {
+            WMLtypeIn = objectType,
+            XMLin = xmlIn,
+            OptionsIn = optionsIn ?? string.Empty,
+            CapabilitiesIn = string.Empty
+        };
+
+        return await _channel!.AddToStoreAsync(request);
+    }
+
+    public async Task<GetCapResponse> GetCapAsync(string? optionsIn = null)
+    {
+        EnsureChannel();
+        
+        var request = new GetCapRequest
+        {
+            OptionsIn = optionsIn ?? "dataVersion=1.4.1.1"
+        };
+
+        return await _channel!.GetCapAsync(request);
+    }
+
+    private void EnsureChannel()
+    {
+        if (_channel == null)
+        {
+            _channel = _channelFactory.CreateChannel();
+        }
+    }
+
+    public void Dispose()
+    {
+        (_channel as IDisposable)?.Dispose();
+        _channelFactory?.Close();
+    }
+}
+```
+
+## 3. ConnectionSettings.cs
+```csharp
+namespace WitsmlClient.Models;
+
+public class ConnectionSettings
+{
+    public required string Uri { get; set; }
+    public string? Username { get; set; }
+    public string? Password { get; set; }
+    public bool EnableCompression { get; set; }
+    public bool AcceptInvalidCertificates { get; set; }
+    public string WitsmlVersion { get; set; } = "1.4.1.1";
+    public TimeSpan Timeout { get; set; } = TimeSpan.FromMinutes(5);
+}
+```
+
+## 4. IWitsmlService.cs (Generated Interface)
+```csharp
+// This would be generated by dotnet-svcutil from WSDL
+using System.ServiceModel;
+using System.Threading.Tasks;
+
+namespace WitsmlClient.Generated;
+
+[ServiceContract(Namespace = "http://www.witsml.org/wsdl/120")]
+public interface IWitsmlService
+{
+    [OperationContract(Action = "http://www.witsml.org/action/120/Store.WMLS_GetFromStore")]
+    Task<GetFromStoreResponse> GetFromStoreAsync(GetFromStoreRequest request);
+    
+    [OperationContract(Action = "http://www.witsml.org/action/120/Store.WMLS_AddToStore")]
+    Task<AddToStoreResponse> AddToStoreAsync(AddToStoreRequest request);
+    
+    [OperationContract(Action = "http://www.witsml.org/action/120/Store.WMLS_UpdateInStore")]
+    Task<UpdateInStoreResponse> UpdateInStoreAsync(UpdateInStoreRequest request);
+    
+    [OperationContract(Action = "http://www.witsml.org/action/120/Store.WMLS_DeleteFromStore")]
+    Task<DeleteFromStoreResponse> DeleteFromStoreAsync(DeleteFromStoreRequest request);
+    
+    [OperationContract(Action = "http://www.witsml.org/action/120/Store.WMLS_GetCap")]
+    Task<GetCapResponse> GetCapAsync(GetCapRequest request);
+}
+
+[MessageContract(WrapperName = "WMLS_GetFromStore")]
+public class GetFromStoreRequest
+{
+    [MessageBodyMember] public required string WMLtypeIn;
+    [MessageBodyMember] public required string QueryIn;
+    [MessageBodyMember] public required string OptionsIn;
+    [MessageBodyMember] public required string CapabilitiesIn;
+}
+
+[MessageContract(WrapperName = "WMLS_GetFromStoreResponse")]
+public class GetFromStoreResponse
+{
+    [MessageBodyMember] public short Result;
+    [MessageBodyMember] public string? XMLout;
+    [MessageBodyMember] public string? SuppMsgOut;
+}
+```
+
+## 5. Usage in Updated WitsmlBrowser Plugin
+```csharp
+// In MainViewModel.cs
+public class MainViewModel : Screen
+{
+    private WitsmlServiceClient? _client;
+    
+    private async Task ExecuteQueryAsync()
+    {
+        try
+        {
+            var settings = new ConnectionSettings
+            {
+                Uri = Model.Connection.Uri,
+                Username = Model.Connection.Username,
+                Password = Model.Connection.Password,
+                EnableCompression = Model.Connection.SoapAcceptCompressedResponses
+            };
+            
+            using var client = new WitsmlServiceClient(settings);
+            
+            var response = await client.GetFromStoreAsync(
+                objectType: "well",
+                xmlIn: QueryXml,
+                optionsIn: GetOptionsIn()
+            );
+            
+            if (response.Result > 0)
+            {
+                ProcessResults(response.XMLout);
+            }
+            else
+            {
+                ShowError(response.Result, response.SuppMsgOut);
+            }
+        }
+        catch (Exception ex)
+        {
+            ShowError($"Query failed: {ex.Message}");
+        }
+    }
+}
+```
+
+## 6. Test Project Structure
+```
+tests/WitsmlClient.Tests/
+├── WitsmlClient.Tests.csproj
+├── ConnectionTests.cs
+├── MockServerTests.cs
+└── SerializationTests.cs
+```
+
+## 7. Sample Test
+```csharp
+using Xunit;
+using WitsmlClient;
+
+public class ConnectionTests
+{
+    [Fact]
+    public async Task CanConnectToWitsmlServer()
+    {
+        // Arrange
+        var settings = new ConnectionSettings
+        {
+            Uri = "http://test.witsml.org/witsml/services",
+            Username = "test",
+            Password = "test123"
+        };
+        
+        // Act
+        using var client = new WitsmlServiceClient(settings);
+        var response = await client.GetCapAsync();
+        
+        // Assert
+        Assert.True(response.Result > 0);
+        Assert.NotNull(response.CapabilitiesOut);
+    }
+}
+```
+
+## Key Migration Points
+
+### What Changes from .NET Framework
+1. **WCF → CoreWCF/Manual:** No built-in WCF, use System.ServiceModel packages
+2. **Sync → Async:** All operations become async
+3. **app.config → Code:** Configuration in code, not XML
+4. **Full Framework → Minimal:** Only essential dependencies
+
+### What Stays the Same
+1. **SOAP Protocol:** Same XML format
+2. **Operations:** Same WITSML functions
+3. **Authentication:** Basic auth still works
+4. **Data Models:** Same XML schemas
+
+## Generation Commands
+
+```bash
+# Install tool
+dotnet tool install --global dotnet-svcutil
+
+# Generate from WSDL
+dotnet-svcutil https://schemas.energistics.org/witsml/v1.4.1/WITSML_v1.4.1.1_API.wsdl \
+  --namespace "*,WitsmlClient.Generated" \
+  --outputDir ./Generated \
+  --targetFramework net8.0 \
+  --sync  # Also generate sync methods if needed
+
+# Alternative: Use local WSDL file
+dotnet-svcutil ./wsdl/WITSML_v1.4.1.1_API.wsdl \
+  --namespace "*,WitsmlClient.Generated" \
+  --outputDir ./Generated
+```
+
+## Next Steps
+1. Download WSDL files from Energistics
+2. Generate client code
+3. Create test project
+4. Test against public WITSML server
+5. Integrate with WitsmlBrowser plugin
