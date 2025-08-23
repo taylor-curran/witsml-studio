@@ -1,5 +1,29 @@
 # WITSML Studio Migration Plan - Browser-Focused
 
+## 🔑 Critical Migration Philosophy
+
+### ext/ Code: Complete Rebuild (New Scaffold) 🏗️
+**Approach:** Discard legacy and regenerate from scratch
+- **Scaffold new system** - Create fresh .NET 8 project structure
+- **Build components** - Generate SOAP client from WSDL
+- **Run sanity checks** - Verify basic SOAP operations
+- **Build validation system** - Create test suite from scratch
+
+**Why:** 50,000+ LOC of Framework 4.5.2 with obsolete dependencies (SuperWebSocket, Apache.Avro, System.Web.Services)
+
+### src/ Code: Traditional Version Upgrade ⬆️
+**Approach:** Preserve existing structure, modernize in-place
+- **Update project files** - Convert to SDK-style .NET 8
+- **Replace dependencies** - Swap for .NET 8 equivalents
+- **Modernize patterns** - Add async/await
+- **Validate behavior** - Ensure functionality preserved
+
+**Why:** Modern WPF architecture with clean plugin system
+
+### The Key Difference
+- **ext/ = Liability to rebuild** → New foundation, new architecture
+- **src/ = Asset to upgrade** → Same foundation, updated plumbing
+
 ## A. Operating model (important constraints)
 
 -   **Mac/Linux development:** All development and testing on Mac/Linux - no Windows access
@@ -21,17 +45,18 @@ Replace Framework-only dependencies with modern .NET 8 equivalents.
 
 ## C. Step-by-step plan
 
-### 1) Project modernization (src/ first) — immediate cross-platform value
+### 1) Project modernization (src/ upgrade) — immediate cross-platform value
 
 **Goal:** Get core projects building on .NET 8 on Mac/Linux.
+**Strategy:** Traditional in-place upgrade of existing src/ code
 
 -   **Actions**
     
-    -   Convert `Desktop.Core` to **SDK-style** + multi-target `net48;net8.0`
+    -   Convert `Desktop.Core` to **SDK-style** + target `net8.0`
         
     -   Convert `Desktop.UnitTest` to **SDK-style** + target `net8.0`
         
-    -   Convert `Desktop.Plugins.WitsmlBrowser` to **SDK-style** + multi-target `net48;net8.0`
+    -   Convert `Desktop.Plugins.WitsmlBrowser` to **SDK-style** + target `net8.0`
         
     -   Migrate `packages.config` → **PackageReference** across all projects
         
@@ -44,9 +69,10 @@ Replace Framework-only dependencies with modern .NET 8 equivalents.
 
 ---
 
-### 2) Extract minimal WITSML client — replace ext/ dependencies
+### 2) Extract minimal WITSML client (ext/ rebuild) — replace legacy dependencies
 
 **Goal:** Create .NET 8 SOAP client for core WITSML operations.
+**Strategy:** Complete rebuild - generate new client from WSDL
 
 -   **Actions**
     
@@ -87,9 +113,10 @@ Replace Framework-only dependencies with modern .NET 8 equivalents.
 
 ---
 
-### 3) Update WitsmlBrowser plugin — use new client
+### 3) Update WitsmlBrowser plugin (src/ upgrade) — use new client
 
 **Goal:** Replace ext/ references with modern .NET 8 client.
+**Strategy:** Traditional upgrade - update dependencies and patterns
 
 -   **Actions**
     
@@ -112,9 +139,10 @@ Replace Framework-only dependencies with modern .NET 8 equivalents.
 
 ---
 
-### 4) Add real server integration — validate against live WITSML
+### 4) Add real server integration (validation) — test rebuilt and upgraded components
 
 **Goal:** Test against actual WITSML servers to ensure compatibility.
+**Strategy:** New validation suite for both rebuilt (ext/) and upgraded (src/) code
 
 -   **Actions**
     
@@ -137,9 +165,10 @@ Replace Framework-only dependencies with modern .NET 8 equivalents.
 
 ---
 
-### 5) UI modernization — .NET 8 WPF compatibility
+### 5) UI modernization (src/ upgrade) — .NET 8 WPF compatibility
 
 **Goal:** Ensure WPF components work cleanly on .NET 8.
+**Strategy:** Minimal changes to existing WPF
 
 -   **Actions**
     
@@ -188,7 +217,7 @@ Replace Framework-only dependencies with modern .NET 8 equivalents.
 
 ### Repository structure
 ```bash
-/src                    # Original WPF projects (multi-target)
+/src                    # Original WPF projects (target .NET 8)
 /ext                    # Original Framework dependencies (reference only)
 /modern
   /WitsmlClient.Core    # New .NET 8 SOAP client
@@ -216,31 +245,31 @@ dotnet pack WitsmlClient.Core --no-build
 
 ## F. Next steps (immediate - 1-2 weeks)
 
-1. **Convert Desktop.Core to SDK-style + .NET 8**
+1. **[src/ upgrade]** Convert Desktop.Core to SDK-style + .NET 8
    ```bash
    cd src/Desktop.Core
    # Convert project file, update dependencies
    dotnet build --framework net8.0
    ```
 
-2. **Create WitsmlClient.Core project**
+2. **[ext/ rebuild]** Create WitsmlClient.Core project
    ```bash
    mkdir modern/WitsmlClient.Core
    dotnet new classlib --framework net8.0
    # Implement basic IWitsmlClient interface
    ```
 
-3. **Extract minimal data models**
+3. **[ext/ rebuild]** Extract minimal data models
    - Copy Well, Wellbore, Log POCOs from ext/
    - Remove Framework-specific attributes
    - Add to WitsmlClient.Core
 
-4. **Implement basic SOAP operations**
+4. **[ext/ rebuild]** Implement basic SOAP operations
    - Start with GetCap (simplest operation)
    - Use HttpClient + XML serialization
    - Create unit tests
 
-5. **Update WitsmlBrowser plugin**
+5. **[src/ upgrade]** Update WitsmlBrowser plugin
    - Replace ext/ references with WitsmlClient.Core
    - Test compilation on .NET 8
 

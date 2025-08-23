@@ -5,18 +5,17 @@ WITSML (Wellsite Information Transfer Standard Markup Language) uses SOAP 1.1 ov
 
 ## WSDL Sources
 
-### Official Energistics Schemas
-```bash
-# WITSML 1.4.1.1 (Most Common)
-https://schemas.energistics.org/Energistics/Schemas/v1.4.1/wsdl/WMLS.WSDL
+### Official WSDL Sources
 
-# WITSML 1.3.1.1 (Legacy Support)
-https://schemas.energistics.org/Energistics/Schemas/v1.3.1/wsdl/WMLS.WSDL
+#### WITSML 1.4.1.1 (Primary)
+- **WSDL**: https://schemas.energistics.org/Energistics/Schemas/v1.4.1/wsdl/WMLS.WSDL
+- **XSD**: https://schemas.energistics.org/Energistics/Schemas/v1.4.1/xsd_schemas/
+- **Namespace**: `http://www.witsml.org/wsdl/141`
 
-# Direct download links
-wget https://schemas.energistics.org/Energistics/Schemas/v1.4.1/wsdl/WMLS.WSDL -O WITSML_1.4.1.1.wsdl
-wget https://schemas.energistics.org/Energistics/Schemas/v1.3.1/wsdl/WMLS.WSDL -O WITSML_1.3.1.1.wsdl
-```
+#### WITSML 1.3.1.1 (Legacy Support)
+- **WSDL**: https://schemas.energistics.org/Energistics/Schemas/v1.3.1/wsdl/WMLS.WSDL
+- **XSD**: https://schemas.energistics.org/Energistics/Schemas/v1.3.1/xsd_schemas/
+- **Namespace**: `http://www.witsml.org/wsdl/131`
 
 ### GitHub Mirrors
 ```bash

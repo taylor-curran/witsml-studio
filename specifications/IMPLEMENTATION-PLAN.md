@@ -31,18 +31,43 @@ Energistics.DataAccess.WITSML141 → WITSML 1.4.1 data models
 - `WMLS_GetVersion` - Protocol version
 - `WMLS_GetBaseMsg` - Error messages
 
+## 🔑 Critical Migration Philosophy
+
+### ext/ Code: Complete Rebuild (New Scaffold) 🏗️
+**Approach:** Discard and regenerate from scratch
+1. **Scaffold new system** - Create fresh .NET 8 project structure
+2. **Build components** - Generate SOAP client from WSDL, create modern abstractions
+3. **Run sanity checks** - Verify basic SOAP operations work
+4. **Build validation system** - Create comprehensive test suite from scratch
+
+**Why:** 50,000+ LOC of legacy Framework 4.5.2 code with obsolete dependencies (SuperWebSocket 0.9.0.2, Apache.Avro 1.7.7.2, System.Web.Services) that cannot be upgraded.
+
+### src/ Code: Traditional Version Upgrade ⬆️
+**Approach:** Preserve existing structure and modernize in-place
+1. **Update project files** - Convert to SDK-style .NET 8 projects
+2. **Replace dependencies** - Swap Framework packages for .NET 8 equivalents
+3. **Modernize patterns** - Add async/await, update to modern C#
+4. **Validate behavior** - Ensure existing functionality preserved
+
+**Why:** Modern WPF architecture with clean plugin system that just needs dependency updates.
+
+### The Key Difference
+- **ext/ = Liability to rebuild** → New foundation, new architecture
+- **src/ = Asset to upgrade** → Same foundation, updated plumbing
+
 ## Implementation Steps
 
-### Phase 1: SOAP Client Generation (Week 1)
+### Phase 1: ext/ Rebuild - SOAP Client Generation (Week 1)
+**Strategy: Complete scaffold replacement**
 1. **Obtain WITSML WSDL**
-   - Download from http://schemas.energistics.org/witsml/
+   - Download from https://schemas.energistics.org/Energistics/Schemas/v1.4.1/wsdl/WMLS.WSDL
    - Version 1.4.1.1 and 1.3.1.1 support needed
    
 2. **Generate .NET 8 Client**
    ```bash
    # Use dotnet-svcutil for .NET 8 compatibility
    dotnet tool install --global dotnet-svcutil
-   dotnet-svcutil http://schemas.energistics.org/witsml/wsdl/WITSML_v1.4.1.1_API.wsdl \
+   dotnet-svcutil https://schemas.energistics.org/Energistics/Schemas/v1.4.1/wsdl/WMLS.WSDL \
      --namespace "Energistics.DataAccess" \
      --outputDir ./generated
    ```
@@ -57,7 +82,8 @@ Energistics.DataAccess.WITSML141 → WITSML 1.4.1 data models
    └── Compression/                  # GZIP support
    ```
 
-### Phase 2: Extract Core Dependencies (Week 1-2)
+### Phase 2: ext/ Rebuild - Extract Core Dependencies (Week 1-2)
+**Strategy: Cherry-pick minimal utilities, modernize during extraction**
 1. **Minimal Framework Components**
    ```
    src/WitsmlFramework/
@@ -77,7 +103,8 @@ Energistics.DataAccess.WITSML141 → WITSML 1.4.1 data models
    └── WitsmlConnectionTest.cs       # Connection validation
    ```
 
-### Phase 3: Update WitsmlBrowser Plugin (Week 2-3)
+### Phase 3: src/ Upgrade - Update WitsmlBrowser Plugin (Week 2-3)
+**Strategy: Traditional in-place upgrade**
 1. **Project File Migration**
    - Update to .NET 8 SDK-style project
    - Replace WCF references with new client
@@ -97,7 +124,8 @@ Energistics.DataAccess.WITSML141 → WITSML 1.4.1 data models
    - Convert sync SOAP calls to async
    - Update ViewModels for async/await
 
-### Phase 4: Testing Strategy Implementation (Week 3-4)
+### Phase 4: Validation - Testing Strategy Implementation (Week 3-4)
+**Strategy: New test suite for both rebuilt (ext/) and upgraded (src/) components**
 1. **Unit Tests**
    ```
    tests/WitsmlClient.Tests/
@@ -114,7 +142,8 @@ Energistics.DataAccess.WITSML141 → WITSML 1.4.1 data models
    └── BehaviorTests.cs              # UI behavior validation
    ```
 
-### Phase 5: UI Compatibility (Week 4)
+### Phase 5: src/ Upgrade - UI Compatibility (Week 4)
+**Strategy: Minimal changes to existing WPF**
 1. **WPF → Avalonia Migration** (if needed for Mac/Linux)
    - Keep ViewModels unchanged
    - Convert XAML views to Avalonia

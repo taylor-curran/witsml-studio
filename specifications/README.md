@@ -33,12 +33,26 @@
 - **[VALIDATION-CHECKLIST.md](./VALIDATION-CHECKLIST.md)**  
   Detailed validation checklist for each migration phase with acceptance criteria
 
-### 5. Migration Patterns (Planned)
-- **[VALIDATION_PATTERNS.md](../validation/VALIDATION_PATTERNS.md)**  
-  Common migration patterns and solutions (if exists)
+- **[VALIDATION_PATTERNS.md](./VALIDATION_PATTERNS.md)**  
+  Practical validation patterns for Mac/Linux without Windows or WITSML server
 
-- **[BEHAVIOR_MAP.md](../validation/BEHAVIOR_MAP.md)**  
-  Behavioral mapping between old and new implementations (if exists)
+- **[BEHAVIOR_MAP.md](./BEHAVIOR_MAP.md)**  
+  Static analysis of actual app behavior and core code paths to validate
+
+### 5. Audit & Quality
+- **[AUDIT-REPORT.md](./AUDIT-REPORT.md)**  
+  Independent audit findings identifying critical issues in specifications
+
+## 🔑 Migration Philosophy
+
+### Two Distinct Approaches
+
+| Codebase | Strategy | Why | Steps |
+|----------|----------|-----|-------|
+| **ext/** | **Complete Rebuild** 🏗️ | 50K+ LOC of legacy Framework 4.5.2 with obsolete dependencies | 1. Scaffold new system<br>2. Build components<br>3. Run sanity checks<br>4. Build validation |
+| **src/** | **Traditional Upgrade** ⬆️ | Modern WPF architecture that just needs updates | 1. Update project files<br>2. Replace dependencies<br>3. Modernize patterns<br>4. Validate behavior |
+
+**Key Insight:** ext/ is a liability to rebuild, src/ is an asset to upgrade
 
 ## 🎯 Quick Reference
 
@@ -53,12 +67,12 @@
 | Testing | New test suite | Cross-platform compatibility |
 
 ### Critical Path
-1. **Generate SOAP Client** → `dotnet-svcutil` from WSDL
-2. **Extract Core Utilities** → ~20 files from Framework
-3. **Create Connection Layer** → ~5 files from Core
-4. **Update Plugin** → Convert to .NET 8 SDK style
-5. **Add Async Support** → Convert sync to async/await
-6. **Validate** → Test against real WITSML servers
+1. **[ext/ rebuild]** Generate SOAP Client → `dotnet-svcutil` from WSDL
+2. **[ext/ rebuild]** Extract Core Utilities → ~20 files from Framework
+3. **[ext/ rebuild]** Create Connection Layer → ~5 files from Core
+4. **[src/ upgrade]** Update Plugin → Convert to .NET 8 SDK style
+5. **[src/ upgrade]** Add Async Support → Convert sync to async/await
+6. **[validation]** Test → Verify against WITSML servers
 
 ### File Count Summary
 | Component | Files to Extract | Files to Generate | Can Skip |

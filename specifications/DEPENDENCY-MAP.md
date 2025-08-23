@@ -1,5 +1,9 @@
 # WITSML Studio Dependency Mapping
 
+> ⚠️ **CRITICAL WARNING**: The ext/witsml submodule is NOT cloned and contains NO files. 
+> All code must be regenerated from WSDL or recreated from scratch.
+> DO NOT attempt to access files in ext/witsml - they do not exist.
+
 ## Critical Path: WitsmlBrowser Plugin Dependencies
 
 ### Direct Project References from WitsmlBrowser
@@ -96,10 +100,14 @@ WitsmlClient/
 - Avro serialization - ETP-only
 - WebSocket libraries - ETP-only
 
-## File Count Summary
-- **Need to Extract:** ~20-25 files
-- **Need to Generate:** ~50-100 files (from WSDL)
-- **Can Skip:** ~50,000+ lines of code
+## Summary: What We Actually Need
+
+### Files to Extract/Recreate: ~20-25 files
+
+**Result:** 
+- Extract/recreate: ~20-25 files
+- Generate from WSDL: ~100 files  
+- Skip: ~50,000+ LOC of unnecessary legacy code
 
 ## Dependency Resolution Order
 
