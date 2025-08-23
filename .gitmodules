@@ -1,4 +1,4 @@
 [submodule "ext/witsml"]
 	path = ext/witsml
-	url = ../witsml
+	url = https://github.com/taylor-curran/witsml.git
 	branch = master
