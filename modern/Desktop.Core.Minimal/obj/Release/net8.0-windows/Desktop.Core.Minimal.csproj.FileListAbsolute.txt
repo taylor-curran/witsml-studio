@@ -1,0 +1,12 @@
+/home/ubuntu/repos/witsml-studio/modern/Desktop.Core.Minimal/obj/Release/net8.0-windows/Desktop.Core.Minimal.csproj.AssemblyReference.cache
+/home/ubuntu/repos/witsml-studio/modern/Desktop.Core.Minimal/obj/Release/net8.0-windows/Desktop.Core.Minimal.GeneratedMSBuildEditorConfig.editorconfig
+/home/ubuntu/repos/witsml-studio/modern/Desktop.Core.Minimal/obj/Release/net8.0-windows/Desktop.Core.Minimal.AssemblyInfoInputs.cache
+/home/ubuntu/repos/witsml-studio/modern/Desktop.Core.Minimal/obj/Release/net8.0-windows/Desktop.Core.Minimal.AssemblyInfo.cs
+/home/ubuntu/repos/witsml-studio/modern/Desktop.Core.Minimal/obj/Release/net8.0-windows/Desktop.Core.Minimal.csproj.CoreCompileInputs.cache
+/home/ubuntu/repos/witsml-studio/modern/Desktop.Core.Minimal/bin/Release/net8.0-windows/PDS.WITSMLstudio.Desktop.Core.deps.json
+/home/ubuntu/repos/witsml-studio/modern/Desktop.Core.Minimal/bin/Release/net8.0-windows/PDS.WITSMLstudio.Desktop.Core.dll
+/home/ubuntu/repos/witsml-studio/modern/Desktop.Core.Minimal/bin/Release/net8.0-windows/PDS.WITSMLstudio.Desktop.Core.pdb
+/home/ubuntu/repos/witsml-studio/modern/Desktop.Core.Minimal/obj/Release/net8.0-windows/PDS.WITSMLstudio.Desktop.Core.dll
+/home/ubuntu/repos/witsml-studio/modern/Desktop.Core.Minimal/obj/Release/net8.0-windows/refint/PDS.WITSMLstudio.Desktop.Core.dll
+/home/ubuntu/repos/witsml-studio/modern/Desktop.Core.Minimal/obj/Release/net8.0-windows/PDS.WITSMLstudio.Desktop.Core.pdb
+/home/ubuntu/repos/witsml-studio/modern/Desktop.Core.Minimal/obj/Release/net8.0-windows/ref/PDS.WITSMLstudio.Desktop.Core.dll

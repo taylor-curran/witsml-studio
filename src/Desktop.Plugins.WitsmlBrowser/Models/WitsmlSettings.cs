@@ -18,6 +18,8 @@
 
 using Caliburn.Micro;
 using PDS.WITSMLstudio.Connections;
+using Energistics.DataAccess;
+using Connection = PDS.WITSMLstudio.Connections.Connection;
 
 namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.Models
 {

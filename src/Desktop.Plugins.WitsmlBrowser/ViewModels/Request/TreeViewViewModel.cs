@@ -22,7 +22,11 @@ using System.Threading.Tasks;
 using Caliburn.Micro;
 using PDS.WITSMLstudio.Desktop.Core.Runtime;
 using PDS.WITSMLstudio.Desktop.Core.ViewModels;
+using PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.ViewModels.Request;
+using static PDS.WITSMLstudio.Desktop.Core.ViewModels.ScreenExtensions;
+using static PDS.WITSMLstudio.Desktop.Core.ViewModels.ParentExtensions;
 using PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.Models;
+using Energistics.DataAccess;
 using PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.Properties;
 
 namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.ViewModels.Request
@@ -50,7 +54,7 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.ViewModels.Request
             {
                 IsContextMenuEnabled = true,
                 DisableIndicatorQueries = _disableIndicatorQueries,
-                WitsmlTreeViewContextManipulators = runtime.Container.ResolveAll<ITreeViewContextMenuManipulator>()
+                WitsmlTreeViewContextManipulators = runtime.ResolveAll(typeof(ITreeViewContextMenuManipulator))
             };
         }
 
@@ -94,8 +98,8 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.ViewModels.Request
             var witsmlVersion = Parent.Parent.GetWitsmlVersionEnum(version);
             TreeViewModel.CreateContext(Parent.Parent.Model.Connection, witsmlVersion);
 
-            TreeViewModel.Context.LogQuery = LogQuery;
-            TreeViewModel.Context.LogResponse = LogResponse;
+            // TreeViewModel.Context.LogQuery = ParentExtensions.LogQuery;
+            // TreeViewModel.Context.LogResponse = ParentExtensions.LogResponse;
         }
 
         /// <summary>
@@ -113,7 +117,7 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.ViewModels.Request
         /// <param name="maxDataRows">The maximum data rows.</param>
         public void OnMaxDataRowsChanged(int? maxDataRows)
         {
-            TreeViewModel.MaxDataRows = maxDataRows;
+            TreeViewModel.MaxDataRows = maxDataRows ?? 0;
         }
 
         /// <summary>
@@ -122,7 +126,7 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.ViewModels.Request
         /// <param name="requestLatestValues">The request latest values.</param>
         public void OnRequestLatestValuesChanged(int? requestLatestValues)
         {
-            TreeViewModel.RequestLatestValues = requestLatestValues;
+            TreeViewModel.RequestLatestValues = requestLatestValues ?? 0;
         }
 
         /// <summary>
@@ -134,10 +138,9 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.ViewModels.Request
             TreeViewModel.ExtraOptionsIn = extraOptionsIn;
         }
 
-        protected override void OnActivate()
+        protected void OnActivate()
         {
-            base.OnActivate();
-            ActivateItem(TreeViewModel);
+            this.ActivateItem(TreeViewModel);
         }
 
         /// <summary>
@@ -149,7 +152,7 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.ViewModels.Request
             base.OnViewReady(view);
             
             TreeViewModel.SetDataObjects(Parent.Parent.DataObjects.Where(x => !_exclude.Contains(x)));
-            TreeViewModel.OnViewReady();
+            TreeViewModel.OnViewReady(this);
         }
 
         private void LogQuery(Functions function, string objectType, string xmlIn, string optionsIn)
@@ -164,7 +167,7 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.ViewModels.Request
 
         private void LogResponse(Functions function, string objectType, string xmlIn, string optionsIn, string xmlOut, short returnCode, string suppMsgOut)
         {
-            var result = new WitsmlResult(
+            var result = new PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.Models.WitsmlResult(
                 objectType: objectType,
                 xmlIn: xmlIn,
                 optionsIn: optionsIn,

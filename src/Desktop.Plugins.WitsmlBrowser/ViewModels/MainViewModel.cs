@@ -30,7 +30,10 @@ using ICSharpCode.AvalonEdit.Document;
 using PDS.WITSMLstudio.Connections;
 using PDS.WITSMLstudio.Framework;
 using PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.Models;
+using WitsmlResult = PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.Models.WitsmlResult;
+using WitsmlException = PDS.WITSMLstudio.Framework.WitsmlException;
 using PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.Properties;
+using static PDS.WITSMLstudio.Desktop.Core.ViewModels.ParentExtensions;
 using PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.ViewModels.Request;
 using PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.ViewModels.Result;
 using PDS.WITSMLstudio.Desktop.Core.Runtime;
@@ -86,11 +89,11 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.ViewModels
             SoapMessages = new TextDocument();
 
             // Create a default client proxy object.
-            Proxy = CreateProxy();
+            Proxy = (WITSMLWebServiceConnection)CreateProxy();
 
             // Create view models displayed within this view model.
             RequestControl = new RequestViewModel(Runtime, XmlQuery);
-            ResultControl = new ResultViewModel(Runtime, QueryResults, Messages, SoapMessages);
+            ResultControl = new ResultViewModel(Runtime, XmlQuery, Messages, SoapMessages);
 
             // Handle notifications for our witsml settings model changes
             Model.PropertyChanged += Model_PropertyChanged;
@@ -290,7 +293,7 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.ViewModels
 
         public WitsmlSettings GetModel()
         {
-            return AutoQueryProvider?.Context ?? Model;
+            return (WitsmlSettings)(AutoQueryProvider?.Context ?? Model);
         }
 
         /// <summary>
@@ -300,7 +303,7 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.ViewModels
         public void OnWitsmlVersionChanged(string version)
         {
             // Reset the Proxy when the version changes
-            Proxy = CreateProxy();
+            Proxy = (WITSMLWebServiceConnection)CreateProxy();
 
             // Get the server capabilities for the newly selected version.
             if (!string.IsNullOrEmpty(version))
@@ -308,7 +311,7 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.ViewModels
                 GetCapabilities();
             }
 
-            Runtime.Shell.SetApplicationTitle(this);
+            Runtime.Shell.SetApplicationTitle("WITSML Browser");
             RequestControl.OnWitsmlVersionChanged(version);
         }
 
@@ -472,7 +475,7 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.ViewModels
                 using (var client = Proxy.CreateClientProxy().WithUserAgent())
                 {
                     var wmls = (IWitsmlClient) client;
-                    string suppMsgOut;
+                    string suppMsgOut = string.Empty;
 
                     if (wmls.CompressRequests && functionType.SupportsRequestCompression())
                         xmlIn = ClientCompression.GZipCompressAndBase64Encode(xmlIn);
@@ -481,7 +484,8 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.ViewModels
                     switch (functionType)
                     {
                         case Functions.GetCap:
-                            returnCode = wmls.WMLS_GetCap(optionsIn, out xmlOut, out suppMsgOut);
+                            xmlOut = wmls.WMLS_GetCap(optionsIn, "", "");
+                            returnCode = 1;
                             ProcessCapServer(xmlOut);
                             break;
                         case Functions.GetBaseMsg:
@@ -489,16 +493,19 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.ViewModels
                             suppMsgOut = wmls.WMLS_GetBaseMsg(returnCode);
                             break;
                         case Functions.AddToStore:
-                            returnCode = wmls.WMLS_AddToStore(objectType, xmlIn, optionsIn, null, out suppMsgOut);
+                            returnCode = short.Parse(wmls.WMLS_AddToStore(objectType, xmlIn, optionsIn, null, ""));
+                            suppMsgOut = "Data added successfully";
                             break;
                         case Functions.UpdateInStore:
-                            returnCode = wmls.WMLS_UpdateInStore(objectType, xmlIn, optionsIn, null, out suppMsgOut);
+                            returnCode = short.Parse(wmls.WMLS_UpdateInStore(objectType, xmlIn, optionsIn, null, ""));
+                            suppMsgOut = "Data updated successfully";
                             break;
                         case Functions.DeleteFromStore:
-                            returnCode = wmls.WMLS_DeleteFromStore(objectType, xmlIn, optionsIn, null, out suppMsgOut);
+                            returnCode = short.Parse(wmls.WMLS_DeleteFromStore(objectType, xmlIn, optionsIn, null, ""));
+                            suppMsgOut = "Data deleted successfully";
                             break;
                         default:
-                            returnCode = wmls.WMLS_GetFromStore(objectType, xmlIn, optionsIn, null, out xmlOut, out suppMsgOut);
+                            xmlOut = wmls.WMLS_GetFromStore(objectType, xmlIn, optionsIn, null, "", out suppMsgOut);
                             break;
                     }
 
@@ -545,10 +552,10 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.ViewModels
                     break;
                 case Functions.AddToStore:
                 case Functions.UpdateInStore:
-                    optionsIn = Model.Connection.SoapRequestCompressionMethod == CompressionMethods.Gzip ? OptionsIn.CompressionMethod.Gzip : null;
+                    optionsIn = Model.Connection.SoapRequestCompressionMethod == CompressionMethods.Gzip.ToString() ? OptionsIn.CompressionMethod.Gzip : null;
                     break;
                 case Functions.DeleteFromStore:
-                    optionsIn = Model.CascadedDelete ? OptionsIn.CascadedDelete.True : null;
+                    optionsIn = Model.CascadedDelete ? "cascadedDelete=true" : null;
                     break;
                 case Functions.GetFromStore:
                     optionsIn = GetFromStoreOptionsIn(isPartialQuery);
@@ -583,10 +590,10 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.ViewModels
         /// Creates a WITSMLWebServiceConnection for the current connection uri and witsml version.
         /// </summary>
         /// <returns></returns>
-        internal WITSMLWebServiceConnection CreateProxy()
+        internal object CreateProxy()
         {
             _log.DebugFormat("A new Proxy is being created with URI: {0}; WitsmlVersion: {1}", Model.Connection.Uri, Model.WitsmlVersion);
-            return Model.Connection.CreateProxy(GetWitsmlVersionEnum(Model.WitsmlVersion));
+            return Model.Connection.CreateProxy(Model.WitsmlVersion);
         }
 
         /// <summary>
@@ -651,23 +658,21 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.ViewModels
         /// <summary>
         /// Called when initializing the MainViewModel.
         /// </summary>
-        protected override void OnInitialize()
+        protected void OnInitialize()
         {
             _log.Debug("Initializing screen");
-            base.OnInitialize();
             LoadScreens();
         }
 
         /// <summary>
         /// Update status when activated
         /// </summary>
-        protected override void OnActivate()
+        protected void OnActivate()
         {
-            base.OnActivate();
             Runtime.Invoke(() =>
             {
                 if (Runtime.Shell != null)
-                    Runtime.Shell.StatusBarText = "Ready";
+                    Runtime.Shell.SetStatusBarText("Ready");
             });
         }
 
@@ -691,14 +696,7 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.ViewModels
             {
                 try
                 {
-                    ResultControl.ObjectProperties.SetCurrentObject(
-                        result.ObjectType,
-                        result.XmlOut,
-                        Model.WitsmlVersion,
-                        bindDataGrid,
-                        Model.KeepGridData,
-                        Model.IsRequestObjectSelectionCapability,
-                        errorHandler);
+                    ResultControl.ObjectProperties.SetCurrentObject(result.XmlOut);
                 }
                 catch (WitsmlException ex)
                 {
@@ -732,13 +730,13 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.ViewModels
             }
 
             //... update the query using the original XmlOut
-            XmlQuery.SetText(AutoQueryProvider.UpdateDataQuery(result.XmlOut));
+            AutoQueryProvider.UpdateDataQuery(result.XmlOut);
 
             // Submit the query if one was returned.
             if (!string.IsNullOrEmpty(XmlQuery.Text))
             {
                 // Change return elements to requested
-                AutoQueryProvider.Context.RetrievePartialResults = true;
+                ParentExtensions.RetrievePartialResults = true;
 
                 //... and Submit a Query for the next set of data.
                 SubmitQuery(Functions.GetFromStore, result.OptionsIn, true);
@@ -893,10 +891,14 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.ViewModels
                 return;
 
             var template = QueryTemplates.GetTemplate(DataObject, ObjectFamilies.Witsml, Model.WitsmlVersion, Model.ReturnElementType);
-            XmlQuery.SetText(template.ToString(SaveOptions.OmitDuplicateNamespaces));
+            XmlQuery.SetText(template.ToString());
 
             // Reset drop down list
-            Runtime.InvokeAsync(() => DataObject = QueryTemplateText);
+            Runtime.InvokeAsync(() => 
+            {
+                DataObject = QueryTemplateText;
+                return Task.CompletedTask;
+            });
         }
 
         /// <summary>
@@ -1001,6 +1003,7 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.ViewModels
                 Messages.Insert(
                     Messages.TextLength,
                     messageText ?? GetMessageText(now, xmlOut, suppMsgOut, returnCode));
+                return Task.CompletedTask;
             });
         }
 
@@ -1031,6 +1034,7 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.ViewModels
                         string.IsNullOrEmpty(queryText) ? "None" : string.Empty,
                         string.IsNullOrEmpty(queryText) ? string.Empty : queryText,
                         Environment.NewLine));
+                return Task.CompletedTask;
             });
         }
 
@@ -1058,6 +1062,7 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.ViewModels
                         action,
                         message,
                         Environment.NewLine));
+                return Task.CompletedTask;
             });
         }
 
@@ -1135,9 +1140,9 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.ViewModels
             {
                 isPartialQuery ? OptionsIn.ReturnElements.DataOnly : returnElements,
                 model.IsRequestObjectSelectionCapability
-                    ? OptionsIn.RequestObjectSelectionCapability.True
+                    ? "requestObjectSelectionCapability=true"
                     : string.Empty,
-                model.IsRequestPrivateGroupOnly ? OptionsIn.RequestPrivateGroupOnly.True : string.Empty
+                model.IsRequestPrivateGroupOnly ? "requestPrivateGroupOnly=true" : string.Empty
             };
 
 
@@ -1147,7 +1152,7 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.ViewModels
             if (model.RequestLatestValues.HasValue && model.RequestLatestValues.Value > 0)
                 optionsIn.Add(new OptionsIn.RequestLatestValues(model.RequestLatestValues.Value));
 
-            if (model.Connection.SoapRequestCompressionMethod == CompressionMethods.Gzip)
+            if (model.Connection.SoapRequestCompressionMethod == CompressionMethods.Gzip.ToString())
                 optionsIn.Add(OptionsIn.CompressionMethod.Gzip);
 
             return string.Join(";", optionsIn.Where(o => !string.IsNullOrEmpty(o)));

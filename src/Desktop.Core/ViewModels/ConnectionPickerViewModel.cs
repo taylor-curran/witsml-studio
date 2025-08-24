@@ -29,6 +29,7 @@ using PDS.WITSMLstudio.Connections;
 using PDS.WITSMLstudio.Framework;
 using PDS.WITSMLstudio.Desktop.Core.Properties;
 using PDS.WITSMLstudio.Desktop.Core.Runtime;
+using Energistics.DataAccess;
 
 namespace PDS.WITSMLstudio.Desktop.Core.ViewModels
 {

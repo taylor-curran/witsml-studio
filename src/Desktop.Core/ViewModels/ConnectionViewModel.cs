@@ -23,6 +23,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Windows;
 using Caliburn.Micro;
+using Energistics.DataAccess;
 using Energistics.Etp.Common.Datatypes;
 using Newtonsoft.Json;
 using PDS.WITSMLstudio.Connections;
