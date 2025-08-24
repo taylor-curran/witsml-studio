@@ -43,7 +43,7 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.ViewModels.Result
             _log.Debug("Creating view model instance");
             Runtime = runtime;
             ObjectData = new DataGridViewModel(runtime);
-            ObjectProperties = new PropertyGridViewModel(runtime, ObjectData);
+            ObjectProperties = new PropertyGridViewModel(runtime);
 
             QueryResults = queryResults;
 

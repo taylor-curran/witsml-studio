@@ -23,6 +23,7 @@ using Energistics.DataAccess;
 using PDS.WITSMLstudio.Framework;
 using PDS.WITSMLstudio.Desktop.Core.Runtime;
 using PDS.WITSMLstudio.Desktop.Core.ViewModels;
+using static PDS.WITSMLstudio.Desktop.Core.ViewModels.ScreenExtensions;
 
 namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.ViewModels.Request
 {
@@ -107,7 +108,7 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.ViewModels.Request
         /// <value>
         /// The options in return elements.
         /// </value>
-        public IEnumerable<OptionsIn.ReturnElements> ReturnElements => OptionsIn.ReturnElements.GetValues().Concat(new [] { _blank });
+        public IEnumerable<string> ReturnElements => OptionsIn.ReturnElements.GetValues().Select(x => x.ToString()).Concat(new [] { _blank.ToString() });
 
         /// <summary>
         /// Called when the selected WITSML version has changed.
@@ -174,16 +175,15 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.ViewModels.Request
             //Items.Add(new TemplatesViewModel());
             Items.Add(new QueryViewModel(Runtime, XmlQuery));
 
-            ActivateItem(Items.FirstOrDefault());
+            this.ActivateItem(Items.FirstOrDefault());
         }
 
         /// <summary>
         /// Called when initializing the request view model.
         /// </summary>
-        protected override void OnInitialize()
+        protected void OnInitialize()
         {
             _log.Debug("Initializing screen");
-            base.OnInitialize();
             LoadScreens();
         }
     }

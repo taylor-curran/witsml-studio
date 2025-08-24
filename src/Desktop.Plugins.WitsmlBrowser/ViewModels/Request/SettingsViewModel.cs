@@ -24,6 +24,7 @@ using System.Windows;
 using Caliburn.Micro;
 using Energistics.DataAccess;
 using PDS.WITSMLstudio.Connections;
+using Connection = PDS.WITSMLstudio.Connections.Connection;
 using PDS.WITSMLstudio.Desktop.Core.Runtime;
 using PDS.WITSMLstudio.Desktop.Core.ViewModels;
 
@@ -50,7 +51,7 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.ViewModels.Request
             ConnectionPicker = new ConnectionPickerViewModel(runtime, ConnectionTypes.Witsml)
             {
                 AutoConnectEnabled = true,
-                OnConnectionChanged = OnConnectionChanged
+                OnConnectionChanged = () => OnConnectionChanged(null).Wait()
             };
         }
 
@@ -134,7 +135,7 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.ViewModels.Request
         public void SelectOutputPath()
         {
             var info = new DirectoryInfo(Model.OutputPath);
-            var owner = new Win32WindowHandle(Application.Current.MainWindow);
+            var owner = Application.Current.MainWindow;
             var dialog = new System.Windows.Forms.FolderBrowserDialog
             {
                 Description = "Select Output Path",
@@ -142,7 +143,7 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.ViewModels.Request
                 ShowNewFolderButton = true,
             };
 
-            if (dialog.ShowDialog(owner) == System.Windows.Forms.DialogResult.OK)
+            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 Model.OutputPath = dialog.SelectedPath;
                 Runtime.OutputFolderPath = Model.OutputPath;
@@ -195,10 +196,9 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.ViewModels.Request
         /// <summary>
         /// Called when initializing the SettingsViewModel.
         /// </summary>
-        protected override void OnInitialize()
+        protected void OnInitialize()
         {
             _log.Debug("Initializing screen");
-            base.OnInitialize();
             Model.ReturnElementType = OptionsIn.ReturnElements.All;
             Runtime.OutputFolderPath = $"{Environment.CurrentDirectory}\\Data\\Results";            
         }

@@ -21,6 +21,7 @@ using Caliburn.Micro;
 using ICSharpCode.AvalonEdit.Document;
 using PDS.WITSMLstudio.Desktop.Core.Runtime;
 using PDS.WITSMLstudio.Desktop.Core.ViewModels;
+using Energistics.DataAccess;
 
 namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.ViewModels.Request
 {

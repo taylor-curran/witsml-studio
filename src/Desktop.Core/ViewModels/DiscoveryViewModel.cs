@@ -12,6 +12,7 @@ using Energistics.Etp.Common;
 using Energistics.Etp.Common.Datatypes;
 using Energistics.Etp.Common.Datatypes.Object;
 using PDS.WITSMLstudio.Connections;
+using Energistics.DataAccess;
 using PDS.WITSMLstudio.Desktop.Core.Adapters;
 using PDS.WITSMLstudio.Desktop.Core.Models;
 using PDS.WITSMLstudio.Desktop.Core.Runtime;

@@ -1,0 +1,17 @@
+/home/ubuntu/repos/witsml-studio/modern/WitsmlClient/bin/Release/net8.0-windows/WitsmlClient.deps.json
+/home/ubuntu/repos/witsml-studio/modern/WitsmlClient/bin/Release/net8.0-windows/WitsmlClient.dll
+/home/ubuntu/repos/witsml-studio/modern/WitsmlClient/bin/Release/net8.0-windows/WitsmlClient.pdb
+/home/ubuntu/repos/witsml-studio/modern/WitsmlClient/bin/Release/net8.0-windows/WitsmlFramework.dll
+/home/ubuntu/repos/witsml-studio/modern/WitsmlClient/bin/Release/net8.0-windows/WitsmlFramework.pdb
+/home/ubuntu/repos/witsml-studio/modern/WitsmlClient/obj/Release/net8.0-windows/WitsmlClient.csproj.AssemblyReference.cache
+/home/ubuntu/repos/witsml-studio/modern/WitsmlClient/obj/Release/net8.0-windows/WitsmlClient.GeneratedMSBuildEditorConfig.editorconfig
+/home/ubuntu/repos/witsml-studio/modern/WitsmlClient/obj/Release/net8.0-windows/WitsmlClient.AssemblyInfoInputs.cache
+/home/ubuntu/repos/witsml-studio/modern/WitsmlClient/obj/Release/net8.0-windows/WitsmlClient.AssemblyInfo.cs
+/home/ubuntu/repos/witsml-studio/modern/WitsmlClient/obj/Release/net8.0-windows/WitsmlClient.csproj.CoreCompileInputs.cache
+/home/ubuntu/repos/witsml-studio/modern/WitsmlClient/obj/Release/net8.0-windows/WitsmlCl.8D15A7CE.Up2Date
+/home/ubuntu/repos/witsml-studio/modern/WitsmlClient/obj/Release/net8.0-windows/WitsmlClient.dll
+/home/ubuntu/repos/witsml-studio/modern/WitsmlClient/obj/Release/net8.0-windows/refint/WitsmlClient.dll
+/home/ubuntu/repos/witsml-studio/modern/WitsmlClient/obj/Release/net8.0-windows/WitsmlClient.pdb
+/home/ubuntu/repos/witsml-studio/modern/WitsmlClient/obj/Release/net8.0-windows/ref/WitsmlClient.dll
+/home/ubuntu/repos/witsml-studio/modern/WitsmlClient/bin/Release/net8.0-windows/PDS.WITSMLstudio.Desktop.Core.dll
+/home/ubuntu/repos/witsml-studio/modern/WitsmlClient/bin/Release/net8.0-windows/PDS.WITSMLstudio.Desktop.Core.pdb
