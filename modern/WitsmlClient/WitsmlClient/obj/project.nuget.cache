@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "dgSpecHash": "OUWvMRBcnWM=",
+  "success": true,
+  "projectFilePath": "/home/ubuntu/repos/witsml-studio/modern/WitsmlClient/WitsmlClient/WitsmlClient.csproj",
+  "expectedPackageFiles": [
+    "/home/ubuntu/.nuget/packages/microsoft.extensions.objectpool/6.0.16/microsoft.extensions.objectpool.6.0.16.nupkg.sha512",
+    "/home/ubuntu/.nuget/packages/system.componentmodel.annotations/5.0.0/system.componentmodel.annotations.5.0.0.nupkg.sha512",
+    "/home/ubuntu/.nuget/packages/system.formats.asn1/6.0.0/system.formats.asn1.6.0.0.nupkg.sha512",
+    "/home/ubuntu/.nuget/packages/system.reflection.dispatchproxy/4.7.1/system.reflection.dispatchproxy.4.7.1.nupkg.sha512",
+    "/home/ubuntu/.nuget/packages/system.security.accesscontrol/6.0.0/system.security.accesscontrol.6.0.0.nupkg.sha512",
+    "/home/ubuntu/.nuget/packages/system.security.cryptography.pkcs/6.0.1/system.security.cryptography.pkcs.6.0.1.nupkg.sha512",
+    "/home/ubuntu/.nuget/packages/system.security.cryptography.xml/6.0.1/system.security.cryptography.xml.6.0.1.nupkg.sha512",
+    "/home/ubuntu/.nuget/packages/system.servicemodel.http/6.0.0/system.servicemodel.http.6.0.0.nupkg.sha512",
+    "/home/ubuntu/.nuget/packages/system.servicemodel.primitives/6.0.0/system.servicemodel.primitives.6.0.0.nupkg.sha512",
+    "/home/ubuntu/.nuget/packages/system.servicemodel.security/6.0.0/system.servicemodel.security.6.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

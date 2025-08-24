@@ -1,0 +1,98 @@
+namespace WitsmlFramework;
+
+public enum ErrorCodes : short
+{
+    Unset = 0,
+    Success = 1,
+    ParialSuccess = 2,
+    SuccessWithWarnings = 1001,
+    PartialSuccessWithWarnings = 1002,
+    MissingPluralRootElement = -401,
+    InvalidMaxReturnNodes = -402,
+    MissingDefaultWitsmlNamespace = -403,
+    InvalidClientSchemaVersion = -404,
+    DataObjectUidAlreadyExists = -405,
+    MissingElementUidForAdd = -406,
+    MissingWmlTypeIn = -407,
+    MissingInputTemplate = -408,
+    InputTemplateNonConforming = -409,
+    EmptyElementNonConforming = -410,
+    ParametersNotEncodedByRules = -411,
+    InputDataObjectNotCompliant = -412,
+    DataObjectNotSupported = -413,
+    InsufficientOperationRights = -414,
+    DataObjectUidMissing = -415,
+    EmptyUidSpecified = -416,
+    EmptyUomSpecified = -417,
+    MissingElementUidForDelete = -418,
+    EmptyNonRecurringElementSpecified = -419,
+    EmptyMandatoryNodeSpecified = -420,
+    MustRetainOneRecurringNode = -421,
+    InvalidReturnValueIn = -422,
+    DataVersionNotSupported = -423,
+    MissingDataVersion = -424,
+    InvalidOptionForGrowingObjectOnly = -425,
+    CompressedInputNonConforming = -426,
+    InvalidOptionsInCombination = -427,
+    InvalidMinimumQueryTemplate = -428,
+    RecurringLogData = -429,
+    DataItemNotSupported = -430,
+    DataObjectItemNotSupported = -431,
+    NotBottomLevelDataObject = -432,
+    DataObjectNotExist = -433,
+    MissingColumnIdentifiers = -434,
+    IndexRangeSpecified = -436,
+    ColumnIdentifierSpecified = -437,
+    RecurringItemsInconsistentSelection = -438,
+    RecurringItemsEmptySelection = -439,
+    KeywordNotSupportedByFunction = -440,
+    InvalidKeywordValue = -441,
+    KeywordNotSupportedByServer = -442,
+    InvalidUnitOfMeasure = -443,
+    InputTemplateMultipleDataObjects = -444,
+    EmptyNewElementsOrAttributes = -445,
+    MissingMeasureDataForUnit = -446,
+    DuplicateColumnIdentifiers = -447,
+    MissingElementUidForUpdate = -448,
+    IndexCurveNotFound = -449,
+    MnemonicsNotUnique = -450,
+    MissingUnitList = -451,
+    UnitListNotMatch = -452,
+    MissingUnitForMeasureData = -453,
+    IndexDataUomNotSame = -454,
+    WellDatumNotSame = -455,
+    MaxDataExceeded = -456,
+    IndexNotFirstInDataColumnList = -457,
+    MixedStructuralRangeIndices = -458,
+    BadColumnIdentifier = -459,
+    ColumnIdentifiersNotSame = -460,
+    MissingMnemonicElement = -461,
+    MissingMnemonicList = -462,
+    NodesWithSameIndex = -463,
+    ChildUidNotUnique = -464,
+    ApiVersionNotMatch = -465,
+    CapabilitiesInNonConforming = -466,
+    ApiVersionNotSupported = -467,
+    MissingDataSchemaVersion = -468,
+    QueryTemplateNonConforming = -469,
+    QueryNotSupported = -470,
+    MissingClientUserAgent = -472,
+    SchemaVersionNotMatch = -473,
+    NodeIndexNotSpecified = -474,
+    MissingSubsetOfGrowingDataObject = -475,
+    InvalidOptionForChangeLogOnly = -476,
+    MissingColumnDescriptionOrDataSection = -477,
+    IncorrectCaseParentUid = -478
+}
+
+public static class ErrorCodesExtensions
+{
+    public static ErrorCodes Parse(string value)
+    {
+        if (short.TryParse(value, out short result))
+        {
+            return (ErrorCodes)result;
+        }
+        return ErrorCodes.Unset;
+    }
+}
