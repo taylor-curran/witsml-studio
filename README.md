@@ -1,45 +1,62 @@
-[![Build status](https://ci.appveyor.com/api/projects/status/995qfnd3kgedxghe?svg=true)](https://ci.appveyor.com/project/PDS/witsml-studio)
-[![Coverity Scan Build Status](https://scan.coverity.com/projects/18118/badge.svg)](https://scan.coverity.com/projects/pds-technology-witsml-studio)
+# WITSML Studio — .NET 8 Migration
 
-## PDS WITSMLstudio Desktop
+Minimal, pragmatic rewrite focused on migrating the legacy WPF/.NET Framework 4.5.2 app to .NET 8. The goal is to bring the WitsmlBrowser plugin online first, with a clean, cross‑platform core.
 
-**Quick Links:**&nbsp;
-[Blog](https://witsml.pds.technology/blog) |
-[Getting Started](https://witsml.pds.technology/docs/getting-started) |
-[Documentation](https://witsml.pds.technology/docs/documentation) |
-[Downloads](https://witsml.pds.technology/docs/downloads) |
-[Support](https://witsml.pds.technology/docs/support)
+## Current scope
+- WitsmlBrowser (SOAP) only; other plugins (ETP Browser, Data Replay, Object Inspector) are out of scope for now
+- `modern-ext/`: new cross‑platform libraries targeting `net8.0` (no Windows dependencies)
+- `src/`: Windows/WPF projects upgraded incrementally
+- `ext/witsml`: read‑only git submodule (legacy code) — do not modify
 
-> **Note:** Be sure to perform a recursive clone of the repository to retrieve the `witsml` submodule.
+## Quick start
+1) Check your .NET SDK (8.0+ works; 9.0 is fine while targeting net8.0)
 
-The "PDS.WITSMLstudio.Desktop" solution builds PDS WITSMLstudio Desktop, a Windows desktop application written in C# and WPF using plug-in technology that can connect to any WITSML server via SOAP or ETP. It contains the following projects: 
+```bash
+dotnet --list-sdks
+```
 
-##### Desktop
-Provides the main application user interface for PDS WITSMLstudio Desktop.
+2) Ensure submodules are initialized
 
-##### Desktop.Core
-A collection of reusable components and plug-in framework.
+```bash
+git submodule update --init --recursive
+```
 
-##### Desktop.IntegrationTest
-Contains integration tests for the WITSML Browser plug-in and core functionality.
+3) Build and test the modern libraries
 
-##### Desktop.Plugins.DataReplay
-Data Producer plug-in that simulates streaming data in and out of a WITSML server.
+```bash
+cd modern-ext
+dotnet build
+dotnet test
+```
 
-##### Desktop.Plugins.EtpBrowser
-ETP Browser plug-in to communicate with a WITSML server via ETP protocol.
+## Repository layout
+```
+witsml-studio/
+├── ext/                    # UNCHANGED (read-only submodule)
+│   └── witsml/             # Legacy .NET Framework 4.5.2
+├── modern-ext/             # NEW - Cross-platform .NET 8 libraries and tests
+│   ├── WitsmlClient/
+│   ├── WitsmlFramework/
+│   └── *.Tests/
+├── src/                    # Windows/WPF projects upgraded incrementally
+└── prompts/migration-sessions/  # Step-by-step migration guides
+```
 
-##### Desktop.Plugins.ObjectInspector
-Object Inspector plug-in that displays WITSML data objects with corresponding Energistics schema information.
+## Migration sessions
+- Source of truth: `prompts/migration-sessions/README.md`
+- Session 1 — Scaffold & Initial .NET 8 Upgrade: `prompts/migration-sessions/SESSION-1-SCAFFOLD.md`
+- Session 2 — Selective Upgrade & Stub Implementation: `prompts/migration-sessions/SESSION-2-BUILD-CORE.md`
+- Session 3 — Replace Stubs with Real Implementation: `prompts/migration-sessions/SESSION-3-INTEGRATE.md`
+- Session 4 — Fix Integration Errors: `prompts/migration-sessions/SESSION-4-FIX-INTEGRATION.md`
+- Session 5 — Validate with Running Code: `prompts/migration-sessions/SESSION-5-VALIDATE-RUNNING.md`
 
-##### Desktop.Plugins.WitsmlBrowser
-WITSML Browser plug-in to communicate with a WITSML server via SOAP.
-
-##### Desktop.UnitTest
-Unit tests for the WITSML Browser and core functionality.
+## Notes
+- Target `net8.0` for libraries; they will run on newer runtimes (e.g., .NET 9)
+- Keep `modern-ext/` platform-agnostic; avoid Windows-only APIs/packages
+- It’s expected that non-WitsmlBrowser plugins remain broken until later phases
 
 ---
-
+ 
 ### Copyright and License
 Copyright &copy; 2018 PDS Americas LLC
 

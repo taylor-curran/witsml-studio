@@ -243,5 +243,3 @@ BenchmarkDotNet.Artifacts/
 modern/
 tests/behavioral/
 tests/integration/
-
-prompts/
