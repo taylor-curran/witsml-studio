@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-             xmlns:conv="clr-namespace:PDS.WITSMLstudio.Desktop.Core.Converters;assembly=PDS.WITSMLstudio.Desktop.Core"
+             xmlns:conv="clr-namespace:WitsmlFramework.Converters;assembly=WitsmlFramework"
              mc:Ignorable="d" d:DesignHeight="800" d:DesignWidth="400">
 
     <UserControl.Resources>

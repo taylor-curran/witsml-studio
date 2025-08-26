@@ -23,6 +23,7 @@ using System.Windows;
 using System.Windows.Threading;
 using Caliburn.Micro;
 using PDS.WITSMLstudio.Framework;
+using WitsmlFramework;
 using PDS.WITSMLstudio.Desktop.Core.ViewModels;
 using System.Collections.Generic;
 

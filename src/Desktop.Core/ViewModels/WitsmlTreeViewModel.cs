@@ -44,6 +44,8 @@ using PDS.WITSMLstudio.Desktop.Core.Runtime;
 using PDS.WITSMLstudio.Framework;
 using PDS.WITSMLstudio.Linq;
 using PDS.WITSMLstudio.Query;
+using WitsmlFramework;
+using WitsmlFramework.ViewModels;
 
 namespace PDS.WITSMLstudio.Desktop.Core.ViewModels
 {

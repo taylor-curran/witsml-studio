@@ -21,6 +21,7 @@ using Caliburn.Micro;
 using Energistics.DataAccess;
 using PDS.WITSMLstudio.Desktop.Core.Models;
 using PDS.WITSMLstudio.Desktop.Core.Runtime;
+using WitsmlFramework;
 
 namespace PDS.WITSMLstudio.Desktop.Core.ViewModels
 {
@@ -35,7 +36,7 @@ namespace PDS.WITSMLstudio.Desktop.Core.ViewModels
         /// </summary>
         /// <param name="runtime">The runtime service.</param>
         /// <param name="objectData">The object data view model.</param>
-        public PropertyGridViewModel(IRuntimeService runtime, DataGridViewModel objectData = null)
+        public PropertyGridViewModel(IRuntimeService runtime, WitsmlFramework.ViewModels.DataGridViewModel objectData = null)
         {
             Runtime = runtime;
             ObjectData = objectData;
@@ -51,7 +52,7 @@ namespace PDS.WITSMLstudio.Desktop.Core.ViewModels
         /// Gets the object data view model.
         /// </summary>
         /// <value>The object data view model.</value>
-        public DataGridViewModel ObjectData { get; }
+        public WitsmlFramework.ViewModels.DataGridViewModel ObjectData { get; }
 
         private object _currentObject;
 
@@ -85,12 +86,12 @@ namespace PDS.WITSMLstudio.Desktop.Core.ViewModels
         public void SetCurrentObject(string objectType, string xml, string version, bool bindDataGrid, bool keepGridData, bool retrieveObjectSelection, Action<WitsmlException> errorHandler)
         {
             var document = WitsmlParser.Parse(xml);
-            var family = ObjectTypes.GetFamily(document.Root);
-            var dataType = ObjectTypes.GetObjectGroupType(objectType, family, version);
-            var dataObject = WitsmlParser.Parse(dataType, document.Root);
+            var family = ObjectTypes.GetFamily(objectType);
+            var dataType = ObjectTypes.GetObjectGroupType(objectType);
+            var dataObject = EnergisticsConverter.XmlToObject<IDataObject>(xml);
             var collection = dataObject as IEnergisticsCollection;
 
-            TypeDecorationManager.Register(dataType);
+            TypeDecorationManager.Register(typeof(IDataObject));
 
             CurrentObject = collection == null
                 ? dataObject

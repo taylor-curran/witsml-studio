@@ -1,0 +1,17 @@
+  Determining projects to restore...
+/home/ubuntu/repos/witsml-studio/src/Desktop.Plugins.WitsmlBrowser/Desktop.Plugins.WitsmlBrowser.csproj : warning NU1701: Package 'AvalonEdit 5.0.4' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net8.0-windows7.0'. This package may not be fully compatible with your project.
+  All projects are up-to-date for restore.
+/home/ubuntu/repos/witsml-studio/src/Desktop.Plugins.WitsmlBrowser/Desktop.Plugins.WitsmlBrowser.csproj : warning NU1701: Package 'AvalonEdit 5.0.4' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net8.0-windows7.0'. This package may not be fully compatible with your project.
+/home/ubuntu/repos/witsml-studio/modern-ext/WitsmlFramework/Converters.cs(3,22): error CS0234: The type or namespace name 'Data' does not exist in the namespace 'System.Windows' (are you missing an assembly reference?) [/home/ubuntu/repos/witsml-studio/modern-ext/WitsmlFramework/WitsmlFramework.csproj]
+/home/ubuntu/repos/witsml-studio/modern-ext/WitsmlFramework/Converters.cs(7,43): error CS0246: The type or namespace name 'IValueConverter' could not be found (are you missing a using directive or an assembly reference?) [/home/ubuntu/repos/witsml-studio/modern-ext/WitsmlFramework/WitsmlFramework.csproj]
+
+Build FAILED.
+
+/home/ubuntu/repos/witsml-studio/src/Desktop.Plugins.WitsmlBrowser/Desktop.Plugins.WitsmlBrowser.csproj : warning NU1701: Package 'AvalonEdit 5.0.4' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net8.0-windows7.0'. This package may not be fully compatible with your project.
+/home/ubuntu/repos/witsml-studio/src/Desktop.Plugins.WitsmlBrowser/Desktop.Plugins.WitsmlBrowser.csproj : warning NU1701: Package 'AvalonEdit 5.0.4' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net8.0-windows7.0'. This package may not be fully compatible with your project.
+/home/ubuntu/repos/witsml-studio/modern-ext/WitsmlFramework/Converters.cs(3,22): error CS0234: The type or namespace name 'Data' does not exist in the namespace 'System.Windows' (are you missing an assembly reference?) [/home/ubuntu/repos/witsml-studio/modern-ext/WitsmlFramework/WitsmlFramework.csproj]
+/home/ubuntu/repos/witsml-studio/modern-ext/WitsmlFramework/Converters.cs(7,43): error CS0246: The type or namespace name 'IValueConverter' could not be found (are you missing a using directive or an assembly reference?) [/home/ubuntu/repos/witsml-studio/modern-ext/WitsmlFramework/WitsmlFramework.csproj]
+    2 Warning(s)
+    2 Error(s)
+
+Time Elapsed 00:00:01.77

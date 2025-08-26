@@ -28,6 +28,7 @@ using PDS.WITSMLstudio.Desktop.Core.Models;
 using PDS.WITSMLstudio.Desktop.Core.Properties;
 using PDS.WITSMLstudio.Desktop.Core.Runtime;
 using PDS.WITSMLstudio.Framework;
+using static Caliburn.Micro.ScreenMethods;
 
 namespace PDS.WITSMLstudio.Desktop.Core.ViewModels
 {

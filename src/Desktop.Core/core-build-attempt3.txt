@@ -1,0 +1,16 @@
+  Determining projects to restore...
+/home/ubuntu/repos/witsml-studio/src/Desktop.Core/Desktop.Core.csproj : error NU1102: Unable to find package Xceed.Wpf.DataGrid with version (>= 7.5.0)
+/home/ubuntu/repos/witsml-studio/src/Desktop.Core/Desktop.Core.csproj : error NU1102:   - Found 30 version(s) in nuget.org [ Nearest version: 7.3.25103.5756 ]
+/home/ubuntu/repos/witsml-studio/src/Desktop.Core/Desktop.Core.csproj : warning NU1701: Package 'AvalonEdit 5.0.4' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net8.0-windows7.0'. This package may not be fully compatible with your project.
+  Failed to restore /home/ubuntu/repos/witsml-studio/src/Desktop.Core/Desktop.Core.csproj (in 371 ms).
+  1 of 2 projects are up-to-date for restore.
+
+Build FAILED.
+
+/home/ubuntu/repos/witsml-studio/src/Desktop.Core/Desktop.Core.csproj : warning NU1701: Package 'AvalonEdit 5.0.4' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net8.0-windows7.0'. This package may not be fully compatible with your project.
+/home/ubuntu/repos/witsml-studio/src/Desktop.Core/Desktop.Core.csproj : error NU1102: Unable to find package Xceed.Wpf.DataGrid with version (>= 7.5.0)
+/home/ubuntu/repos/witsml-studio/src/Desktop.Core/Desktop.Core.csproj : error NU1102:   - Found 30 version(s) in nuget.org [ Nearest version: 7.3.25103.5756 ]
+    1 Warning(s)
+    1 Error(s)
+
+Time Elapsed 00:00:01.15

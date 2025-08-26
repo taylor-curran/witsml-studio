@@ -17,7 +17,8 @@
 //-----------------------------------------------------------------------
 
 using Caliburn.Micro;
-using PDS.WITSMLstudio.Connections;
+using WitsmlFramework;
+using WitsmlFramework.Attributes;
 
 namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.Models
 {
@@ -27,7 +28,7 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.Models
     /// <seealso cref="Caliburn.Micro.PropertyChangedBase" />
     public class WitsmlSettings : PropertyChangedBase
     {
-        private OptionsIn.ReturnElements _previousReturnElementType;
+        private OptionsIn.ReturnElements? _previousReturnElementType;
         private bool? _previousRequestPrivateGroupOnly;
         private bool? _previousRetrievePartialResults;
 
@@ -63,7 +64,7 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.Models
             }
         }
 
-        private OptionsIn.ReturnElements _returnElementType;
+        private OptionsIn.ReturnElements? _returnElementType;
 
         /// <summary>
         /// Gets or sets the type of the return element.
@@ -71,7 +72,7 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.Models
         /// <value>
         /// The type of the return element.
         /// </value>
-        public OptionsIn.ReturnElements ReturnElementType
+        public OptionsIn.ReturnElements? ReturnElementType
         {
             get { return _returnElementType; }
             set
@@ -451,7 +452,7 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.Models
         /// <value>
         /// <c>true</c> if ReturnElementType equals All; otherwise, <c>false</c>.
         /// </value>
-        public bool IsReturnElementsAll => OptionsIn.ReturnElements.All.Equals(ReturnElementType?.Value);
+        public bool IsReturnElementsAll => OptionsIn.ReturnElements.All.Equals(ReturnElementType?.ToString());
 
         /// <summary>
         /// Clones this instance.

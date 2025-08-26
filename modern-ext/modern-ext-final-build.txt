@@ -1,0 +1,14 @@
+  Determining projects to restore...
+/home/ubuntu/repos/witsml-studio/modern-ext/WitsmlClient.Tests/WitsmlClient.Tests.csproj : error NU1201: Project WitsmlClient is not compatible with net8.0 (.NETCoreApp,Version=v8.0). Project WitsmlClient supports: net8.0-windows7.0 (.NETCoreApp,Version=v8.0) [/home/ubuntu/repos/witsml-studio/modern-ext/ModernExt.sln]
+/home/ubuntu/repos/witsml-studio/modern-ext/WitsmlClient.Tests/WitsmlClient.Tests.csproj : error NU1201: Project WitsmlFramework is not compatible with net8.0 (.NETCoreApp,Version=v8.0). Project WitsmlFramework supports: net8.0-windows7.0 (.NETCoreApp,Version=v8.0) [/home/ubuntu/repos/witsml-studio/modern-ext/ModernExt.sln]
+  Failed to restore /home/ubuntu/repos/witsml-studio/modern-ext/WitsmlClient.Tests/WitsmlClient.Tests.csproj (in 536 ms).
+  2 of 3 projects are up-to-date for restore.
+
+Build FAILED.
+
+/home/ubuntu/repos/witsml-studio/modern-ext/WitsmlClient.Tests/WitsmlClient.Tests.csproj : error NU1201: Project WitsmlClient is not compatible with net8.0 (.NETCoreApp,Version=v8.0). Project WitsmlClient supports: net8.0-windows7.0 (.NETCoreApp,Version=v8.0) [/home/ubuntu/repos/witsml-studio/modern-ext/ModernExt.sln]
+/home/ubuntu/repos/witsml-studio/modern-ext/WitsmlClient.Tests/WitsmlClient.Tests.csproj : error NU1201: Project WitsmlFramework is not compatible with net8.0 (.NETCoreApp,Version=v8.0). Project WitsmlFramework supports: net8.0-windows7.0 (.NETCoreApp,Version=v8.0) [/home/ubuntu/repos/witsml-studio/modern-ext/ModernExt.sln]
+    0 Warning(s)
+    2 Error(s)
+
+Time Elapsed 00:00:01.60

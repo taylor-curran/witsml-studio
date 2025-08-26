@@ -17,6 +17,7 @@
 //-----------------------------------------------------------------------
 
 using PDS.WITSMLstudio.Framework;
+using WitsmlFramework;
 
 namespace PDS.WITSMLstudio.Desktop.Core.Runtime
 {

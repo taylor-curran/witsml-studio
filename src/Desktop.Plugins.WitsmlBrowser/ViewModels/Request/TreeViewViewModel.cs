@@ -20,8 +20,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Caliburn.Micro;
-using PDS.WITSMLstudio.Desktop.Core.Runtime;
-using PDS.WITSMLstudio.Desktop.Core.ViewModels;
+using WitsmlFramework.ViewModels;
+using WitsmlFramework;
+using WitsmlFramework.Attributes;
 using PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.Models;
 using PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.Properties;
 
@@ -94,8 +95,8 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.ViewModels.Request
             var witsmlVersion = Parent.Parent.GetWitsmlVersionEnum(version);
             TreeViewModel.CreateContext(Parent.Parent.Model.Connection, witsmlVersion);
 
-            TreeViewModel.Context.LogQuery = LogQuery;
-            TreeViewModel.Context.LogResponse = LogResponse;
+            Runtime.Shell.LogQuery = LogQuery;
+            Runtime.Shell.LogResponse = LogResponse;
         }
 
         /// <summary>
@@ -134,10 +135,9 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.ViewModels.Request
             TreeViewModel.ExtraOptionsIn = extraOptionsIn;
         }
 
-        protected override void OnActivate()
+        protected void OnActivate()
         {
-            base.OnActivate();
-            ActivateItem(TreeViewModel);
+            // TreeViewModel is not an IScreen, so we don't add it to Items
         }
 
         /// <summary>

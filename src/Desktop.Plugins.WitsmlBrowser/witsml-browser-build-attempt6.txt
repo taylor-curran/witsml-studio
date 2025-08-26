@@ -1,0 +1,21 @@
+  Determining projects to restore...
+  Restored /home/ubuntu/repos/witsml-studio/modern-ext/WitsmlClient/WitsmlClient.csproj (in 105 ms).
+/home/ubuntu/repos/witsml-studio/src/Desktop.Plugins.WitsmlBrowser/Desktop.Plugins.WitsmlBrowser.csproj : warning NU1701: Package 'AvalonEdit 5.0.4' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net8.0-windows7.0'. This package may not be fully compatible with your project.
+  Restored /home/ubuntu/repos/witsml-studio/src/Desktop.Plugins.WitsmlBrowser/Desktop.Plugins.WitsmlBrowser.csproj (in 206 ms).
+  1 of 3 projects are up-to-date for restore.
+/home/ubuntu/repos/witsml-studio/src/Desktop.Plugins.WitsmlBrowser/Desktop.Plugins.WitsmlBrowser.csproj : warning NU1701: Package 'AvalonEdit 5.0.4' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net8.0-windows7.0'. This package may not be fully compatible with your project.
+  WitsmlFramework -> /home/ubuntu/repos/witsml-studio/modern-ext/WitsmlFramework/bin/Debug/net8.0-windows/WitsmlFramework.dll
+  WitsmlClient -> /home/ubuntu/repos/witsml-studio/modern-ext/WitsmlClient/bin/Debug/net8.0-windows/WitsmlClient.dll
+/home/ubuntu/repos/witsml-studio/src/Desktop.Plugins.WitsmlBrowser/Views/Request/QueryView.xaml(15,10): error MC3074: The tag 'NullToVisibilityConverter' does not exist in XML namespace 'clr-namespace:WitsmlFramework.Converters;assembly=WitsmlFramework'. Line 15 Position 10. [/home/ubuntu/repos/witsml-studio/src/Desktop.Plugins.WitsmlBrowser/Desktop.Plugins.WitsmlBrowser.csproj]
+/home/ubuntu/repos/witsml-studio/src/Desktop.Plugins.WitsmlBrowser/Views/Request/SettingsView.xaml(12,10): error MC3074: The tag 'BooleanInverseConverter' does not exist in XML namespace 'clr-namespace:WitsmlFramework.Converters;assembly=WitsmlFramework'. Line 12 Position 10. [/home/ubuntu/repos/witsml-studio/src/Desktop.Plugins.WitsmlBrowser/Desktop.Plugins.WitsmlBrowser.csproj]
+
+Build FAILED.
+
+/home/ubuntu/repos/witsml-studio/src/Desktop.Plugins.WitsmlBrowser/Desktop.Plugins.WitsmlBrowser.csproj : warning NU1701: Package 'AvalonEdit 5.0.4' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net8.0-windows7.0'. This package may not be fully compatible with your project.
+/home/ubuntu/repos/witsml-studio/src/Desktop.Plugins.WitsmlBrowser/Desktop.Plugins.WitsmlBrowser.csproj : warning NU1701: Package 'AvalonEdit 5.0.4' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net8.0-windows7.0'. This package may not be fully compatible with your project.
+/home/ubuntu/repos/witsml-studio/src/Desktop.Plugins.WitsmlBrowser/Views/Request/QueryView.xaml(15,10): error MC3074: The tag 'NullToVisibilityConverter' does not exist in XML namespace 'clr-namespace:WitsmlFramework.Converters;assembly=WitsmlFramework'. Line 15 Position 10. [/home/ubuntu/repos/witsml-studio/src/Desktop.Plugins.WitsmlBrowser/Desktop.Plugins.WitsmlBrowser.csproj]
+/home/ubuntu/repos/witsml-studio/src/Desktop.Plugins.WitsmlBrowser/Views/Request/SettingsView.xaml(12,10): error MC3074: The tag 'BooleanInverseConverter' does not exist in XML namespace 'clr-namespace:WitsmlFramework.Converters;assembly=WitsmlFramework'. Line 12 Position 10. [/home/ubuntu/repos/witsml-studio/src/Desktop.Plugins.WitsmlBrowser/Desktop.Plugins.WitsmlBrowser.csproj]
+    2 Warning(s)
+    2 Error(s)
+
+Time Elapsed 00:00:02.45

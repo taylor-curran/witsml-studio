@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-             xmlns:conv="clr-namespace:PDS.WITSMLstudio.Desktop.Core.Converters;assembly=PDS.WITSMLstudio.Desktop.Core"
+             xmlns:conv="clr-namespace:WitsmlFramework.Converters;assembly=WitsmlFramework"
              xmlns:local="clr-namespace:PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.Views.Request"
              mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="300">
 

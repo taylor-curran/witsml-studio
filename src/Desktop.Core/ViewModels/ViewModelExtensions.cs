@@ -22,6 +22,8 @@ using System.IO;
 using Caliburn.Micro;
 using Microsoft.Win32;
 using PDS.WITSMLstudio.Desktop.Core.Models;
+using WitsmlFramework;
+using static WitsmlFramework.Extensions;
 
 namespace PDS.WITSMLstudio.Desktop.Core.ViewModels
 {
@@ -38,7 +40,7 @@ namespace PDS.WITSMLstudio.Desktop.Core.ViewModels
         /// <returns>A <see cref="ResourceViewModel" /> instance.</returns>
         public static ResourceViewModel FindByUri(this IList<ResourceViewModel> resources, string uri)
         {
-            return resources.Find(x => x.Resource.Uri == uri);
+            return resources.Find(x => x.Resource.Uri() == uri);
         }
 
         /// <summary>
@@ -49,7 +51,7 @@ namespace PDS.WITSMLstudio.Desktop.Core.ViewModels
         /// <returns>A <see cref="ResourceViewModel" /> instance.</returns>
         public static ResourceViewModel FindByMessageId(this IList<ResourceViewModel> resources, long messageId)
         {
-            return resources.Find(x => x.MessageId == messageId);
+            return resources.Find(x => x.MessageId == messageId.ToString());
         }
 
         /// <summary>

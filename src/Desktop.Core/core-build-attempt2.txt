@@ -1,0 +1,19 @@
+  Determining projects to restore...
+/home/ubuntu/repos/witsml-studio/src/Desktop.Core/Desktop.Core.csproj : warning NU1701: Package 'AvalonEdit 5.0.4' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net8.0-windows7.0'. This package may not be fully compatible with your project.
+  Restored /home/ubuntu/repos/witsml-studio/src/Desktop.Core/Desktop.Core.csproj (in 11.4 sec).
+  1 of 2 projects are up-to-date for restore.
+/home/ubuntu/repos/witsml-studio/src/Desktop.Core/Desktop.Core.csproj : warning NU1701: Package 'AvalonEdit 5.0.4' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net8.0-windows7.0'. This package may not be fully compatible with your project.
+  WitsmlFramework -> /home/ubuntu/repos/witsml-studio/modern-ext/WitsmlFramework/bin/Debug/net8.0/WitsmlFramework.dll
+/home/ubuntu/repos/witsml-studio/src/Desktop.Core/Views/ConnectionPickerView.xaml(24,67): error MC3066: The type reference cannot find a public type named 'Connection'. Line 24 Position 67. [/home/ubuntu/repos/witsml-studio/src/Desktop.Core/Desktop.Core.csproj]
+/home/ubuntu/repos/witsml-studio/src/Desktop.Core/Views/DataGridView.xaml(11,10): error MC3074: The tag 'DataGridCollectionViewSource' does not exist in XML namespace 'http://schemas.xceed.com/wpf/xaml/datagrid'. Line 11 Position 10. [/home/ubuntu/repos/witsml-studio/src/Desktop.Core/Desktop.Core.csproj]
+
+Build FAILED.
+
+/home/ubuntu/repos/witsml-studio/src/Desktop.Core/Desktop.Core.csproj : warning NU1701: Package 'AvalonEdit 5.0.4' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net8.0-windows7.0'. This package may not be fully compatible with your project.
+/home/ubuntu/repos/witsml-studio/src/Desktop.Core/Desktop.Core.csproj : warning NU1701: Package 'AvalonEdit 5.0.4' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net8.0-windows7.0'. This package may not be fully compatible with your project.
+/home/ubuntu/repos/witsml-studio/src/Desktop.Core/Views/ConnectionPickerView.xaml(24,67): error MC3066: The type reference cannot find a public type named 'Connection'. Line 24 Position 67. [/home/ubuntu/repos/witsml-studio/src/Desktop.Core/Desktop.Core.csproj]
+/home/ubuntu/repos/witsml-studio/src/Desktop.Core/Views/DataGridView.xaml(11,10): error MC3074: The tag 'DataGridCollectionViewSource' does not exist in XML namespace 'http://schemas.xceed.com/wpf/xaml/datagrid'. Line 11 Position 10. [/home/ubuntu/repos/witsml-studio/src/Desktop.Core/Desktop.Core.csproj]
+    2 Warning(s)
+    2 Error(s)
+
+Time Elapsed 00:00:12.78
