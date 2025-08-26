@@ -99,11 +99,6 @@ namespace WitsmlFramework
         public override string ToString() => Name;
     }
     
-    public class WitsmlException : Exception
-    {
-        public WitsmlException(string message) : base(message) { }
-        public int ErrorCode { get; set; }
-    }
     
     public interface IWitsmlClient
     {

@@ -113,7 +113,7 @@ namespace WitsmlFramework.ViewModels
             ItemsSource = new object[0];
         }
         
-        public void SetCurrentObject(string objectType, object currentObject, bool keepGridData, bool retrieveObjectSelection, Action<WitsmlFramework.WitsmlException> errorHandler)
+        public void SetCurrentObject(string objectType, object currentObject, bool keepGridData, bool retrieveObjectSelection, Action<Exception> errorHandler)
         {
         }
         
