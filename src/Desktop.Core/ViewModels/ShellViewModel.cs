@@ -27,6 +27,7 @@ using Newtonsoft.Json;
 using PDS.WITSMLstudio.Desktop.Core.Properties;
 using PDS.WITSMLstudio.Desktop.Core.Runtime;
 using PDS.WITSMLstudio.Desktop.Core.SaveWindowState;
+using static Caliburn.Micro.ScreenMethods;
 
 namespace PDS.WITSMLstudio.Desktop.Core.ViewModels
 {
@@ -262,7 +263,7 @@ namespace PDS.WITSMLstudio.Desktop.Core.ViewModels
             if (item != null && success)
             {
                 SetApplicationTitle(item);
-                item.ActivateEmbeddedItem();
+                item.ActivateEmbeddedItem(item);
             }
         }
 

@@ -40,7 +40,7 @@ namespace PDS.WITSMLstudio.Desktop.Core.ViewModels
         /// <returns>A <see cref="ResourceViewModel" /> instance.</returns>
         public static ResourceViewModel FindByUri(this IList<ResourceViewModel> resources, string uri)
         {
-            return resources.Find(x => x.Resource.Uri == uri);
+            return resources.Find(x => x.Resource.Uri() == uri);
         }
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace PDS.WITSMLstudio.Desktop.Core.ViewModels
         /// <returns>A <see cref="ResourceViewModel" /> instance.</returns>
         public static ResourceViewModel FindByMessageId(this IList<ResourceViewModel> resources, long messageId)
         {
-            return resources.Find(x => x.MessageId == messageId);
+            return resources.Find(x => x.MessageId == messageId.ToString());
         }
 
         /// <summary>

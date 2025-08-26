@@ -151,7 +151,7 @@ namespace PDS.WITSMLstudio.Desktop.Core.ViewModels
             var viewModel = new ConnectionViewModel(Runtime, ConnectionType)
             {
                 DataItem = connection ?? new Connection(),
-                ConnectionNames = existing
+                ConnectionNames = existing.ToList()
             };
 
             Runtime.Invoke(() =>
@@ -257,7 +257,7 @@ namespace PDS.WITSMLstudio.Desktop.Core.ViewModels
             {
                 // Save selected connection to file to enable auto-connect
                 var viewModel = new ConnectionViewModel(Runtime, ConnectionType);
-                viewModel.SaveConnectionFile(Connection);
+                viewModel.SaveConnectionFile(Connection.Name);
 
                 // Invoke delegate that will handle the connection change
                 OnConnectionChanged?.Invoke(Connection);

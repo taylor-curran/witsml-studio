@@ -86,12 +86,12 @@ namespace PDS.WITSMLstudio.Desktop.Core.ViewModels
         public void SetCurrentObject(string objectType, string xml, string version, bool bindDataGrid, bool keepGridData, bool retrieveObjectSelection, Action<WitsmlException> errorHandler)
         {
             var document = WitsmlParser.Parse(xml);
-            var family = ObjectTypes.GetFamily(document.Root);
-            var dataType = ObjectTypes.GetObjectGroupType(objectType, family, version);
-            var dataObject = WitsmlParser.Parse(dataType, document.Root);
+            var family = ObjectTypes.GetFamily(objectType);
+            var dataType = ObjectTypes.GetObjectGroupType(objectType);
+            var dataObject = EnergisticsConverter.XmlToObject<IDataObject>(xml);
             var collection = dataObject as IEnergisticsCollection;
 
-            TypeDecorationManager.Register(dataType);
+            TypeDecorationManager.Register(typeof(IDataObject));
 
             CurrentObject = collection == null
                 ? dataObject
