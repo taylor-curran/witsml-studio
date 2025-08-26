@@ -23,7 +23,7 @@ using Caliburn.Micro;
 using Microsoft.Win32;
 using PDS.WITSMLstudio.Desktop.Core.Models;
 using WitsmlFramework;
-using WitsmlFramework.Extensions;
+using static WitsmlFramework.Extensions;
 
 namespace PDS.WITSMLstudio.Desktop.Core.ViewModels
 {

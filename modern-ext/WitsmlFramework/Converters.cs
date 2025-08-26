@@ -1,11 +1,9 @@
 using System;
 using System.Globalization;
-using System.Windows;
-using System.Windows.Data;
 
 namespace WitsmlFramework.Converters
 {
-    public class NullToBooleanConverter : IValueConverter
+    public class NullToBooleanConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -18,11 +16,11 @@ namespace WitsmlFramework.Converters
         }
     }
 
-    public class NullToVisibilityConverter : IValueConverter
+    public class NullToVisibilityConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value != null ? Visibility.Visible : Visibility.Collapsed;
+            return value != null;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -31,7 +29,7 @@ namespace WitsmlFramework.Converters
         }
     }
 
-    public class BooleanInverseConverter : IValueConverter
+    public class BooleanInverseConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

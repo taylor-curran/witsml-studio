@@ -11,6 +11,14 @@ public class WitsmlClient : IWitsmlClient
         _connection = connection ?? throw new ArgumentNullException(nameof(connection));
     }
     
+    public Connection Connection 
+    { 
+        get => _connection; 
+        set => throw new NotSupportedException("Connection cannot be changed after initialization"); 
+    }
+    
+    public bool IsConnected { get; private set; } = false;
+    
     public Task<string> GetFromStoreAsync(string objectType, string query, string options, string capabilities)
     {
         return Task.FromResult("<stub>GetFromStore not implemented</stub>");

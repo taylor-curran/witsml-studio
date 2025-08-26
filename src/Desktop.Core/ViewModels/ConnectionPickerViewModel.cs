@@ -30,7 +30,7 @@ using PDS.WITSMLstudio.Framework;
 using PDS.WITSMLstudio.Desktop.Core.Properties;
 using PDS.WITSMLstudio.Desktop.Core.Runtime;
 using WitsmlFramework;
-using WitsmlFramework.Extensions;
+using static WitsmlFramework.Extensions;
 
 namespace PDS.WITSMLstudio.Desktop.Core.ViewModels
 {

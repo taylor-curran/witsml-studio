@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.Views.Request"
              xmlns:cal="http://www.caliburnproject.org"
-             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:conv="clr-namespace:WitsmlFramework.Converters;assembly=WitsmlFramework"
              mc:Ignorable="d" d:DesignHeight="500" d:DesignWidth="500">
 
