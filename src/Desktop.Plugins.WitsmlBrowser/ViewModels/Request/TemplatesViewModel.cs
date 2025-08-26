@@ -17,7 +17,9 @@
 //-----------------------------------------------------------------------
 
 using Caliburn.Micro;
-using PDS.WITSMLstudio.Desktop.Core.Runtime;
+using WitsmlFramework.ViewModels;
+using WitsmlFramework;
+using WitsmlFramework.Attributes;
 
 namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.ViewModels.Request
 {

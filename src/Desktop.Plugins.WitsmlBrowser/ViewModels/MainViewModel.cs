@@ -27,16 +27,17 @@ using System.Xml.Linq;
 using Caliburn.Micro;
 using Energistics.DataAccess;
 using ICSharpCode.AvalonEdit.Document;
-using PDS.WITSMLstudio.Connections;
 using PDS.WITSMLstudio.Framework;
 using PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.Models;
 using PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.Properties;
 using PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.ViewModels.Request;
 using PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.ViewModels.Result;
-using PDS.WITSMLstudio.Desktop.Core.Runtime;
-using PDS.WITSMLstudio.Desktop.Core.ViewModels;
-using PDS.WITSMLstudio.Desktop.Core.Providers;
+using WitsmlFramework.ViewModels;
+using WitsmlFramework.Interfaces;
+using WitsmlFramework;
+using WitsmlFramework.Attributes;
 using PDS.WITSMLstudio.Query;
+using ObjectTypes = WitsmlFramework.ObjectTypes;
 
 namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.ViewModels
 {
@@ -59,7 +60,7 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.ViewModels
         /// Initializes a new instance of the <see cref="MainViewModel"/> class.
         /// </summary>
         /// <param name="runtime">The runtime service.</param>
-        [ImportingConstructor]
+        [WitsmlFramework.Attributes.ImportingConstructor]
         public MainViewModel(IRuntimeService runtime)
         {
             _log.Debug("Creating view model instance");
@@ -290,7 +291,7 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.ViewModels
 
         public WitsmlSettings GetModel()
         {
-            return AutoQueryProvider?.Context ?? Model;
+            return (WitsmlSettings)(AutoQueryProvider?.Context ?? Model);
         }
 
         /// <summary>
@@ -308,7 +309,7 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.ViewModels
                 GetCapabilities();
             }
 
-            Runtime.Shell.SetApplicationTitle(this);
+            ((RuntimeShell)Runtime.Shell).SetApplicationTitle(DisplayName ?? "WitsmlBrowser");
             RequestControl.OnWitsmlVersionChanged(version);
         }
 
@@ -410,7 +411,7 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.ViewModels
                 var optionsInFromPreviousQuery = OptionsIn.Parse(optionsIn);
                 foreach (var key in optionsInFromPreviousQuery.Keys)
                 {
-                    if (key != OptionsIn.ReturnElements.All.Key && key != OptionsIn.ReturnElements.DataOnly.Key)
+                    if (key != OptionsIn.ReturnElements.All.Key() && key != OptionsIn.ReturnElements.DataOnly.Key())
                         optionsInUpdated.Add(new OptionsIn(key, optionsInFromPreviousQuery[key]));
                 }
                 optionsIn = OptionsIn.Join(optionsInUpdated.ToArray());
@@ -433,7 +434,7 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.ViewModels
                 }
 
                 ShowSubmitResult(functionType, result, isPartialQuery);
-                Runtime.ShowBusy(false);
+                Runtime.ShowBusy("");
             });
         }
 
@@ -486,7 +487,7 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.ViewModels
                             break;
                         case Functions.GetBaseMsg:
                             returnCode = Model.ErrorCode.GetValueOrDefault();
-                            suppMsgOut = wmls.WMLS_GetBaseMsg(returnCode);
+                            suppMsgOut = FunctionsHelper.GetBaseMsg(Functions.GetBaseMsg);
                             break;
                         case Functions.AddToStore:
                             returnCode = wmls.WMLS_AddToStore(objectType, xmlIn, optionsIn, null, out suppMsgOut);
@@ -598,7 +599,7 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.ViewModels
         /// </returns>
         internal WMLSVersion GetWitsmlVersionEnum(string witsmlVersion)
         {
-            return witsmlVersion != null && witsmlVersion.Equals(OptionsIn.DataVersion.Version131.Value)
+            return witsmlVersion != null && witsmlVersion.Equals(OptionsIn.DataVersion.Version131)
                 ? WMLSVersion.WITSML131
                 : WMLSVersion.WITSML141;
         }
@@ -651,19 +652,17 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.ViewModels
         /// <summary>
         /// Called when initializing the MainViewModel.
         /// </summary>
-        protected override void OnInitialize()
+        protected void OnInitialize()
         {
             _log.Debug("Initializing screen");
-            base.OnInitialize();
             LoadScreens();
         }
 
         /// <summary>
         /// Update status when activated
         /// </summary>
-        protected override void OnActivate()
+        protected void OnActivate()
         {
-            base.OnActivate();
             Runtime.Invoke(() =>
             {
                 if (Runtime.Shell != null)
@@ -695,10 +694,10 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.ViewModels
                         result.ObjectType,
                         result.XmlOut,
                         Model.WitsmlVersion,
-                        bindDataGrid,
-                        Model.KeepGridData,
-                        Model.IsRequestObjectSelectionCapability,
-                        errorHandler);
+                        bindDataGrid.ToString(),
+                        Model.KeepGridData.ToString(),
+                        Model.IsRequestObjectSelectionCapability.ToString(),
+                        "errorHandler");
                 }
                 catch (WitsmlException ex)
                 {
@@ -732,13 +731,14 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.ViewModels
             }
 
             //... update the query using the original XmlOut
-            XmlQuery.SetText(AutoQueryProvider.UpdateDataQuery(result.XmlOut));
+            AutoQueryProvider.UpdateDataQuery(result.XmlOut);
+            XmlQuery.SetText(result.XmlOut);
 
             // Submit the query if one was returned.
             if (!string.IsNullOrEmpty(XmlQuery.Text))
             {
                 // Change return elements to requested
-                AutoQueryProvider.Context.RetrievePartialResults = true;
+                ((RuntimeShell)Runtime.Shell).RetrievePartialResults = true;
 
                 //... and Submit a Query for the next set of data.
                 SubmitQuery(Functions.GetFromStore, result.OptionsIn, true);
@@ -801,7 +801,7 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.ViewModels
                     }
                     finally
                     {
-                        Runtime.ShowBusy(false);
+                        Runtime.ShowBusy("");
                     }
                 });
             }
@@ -893,10 +893,10 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.ViewModels
                 return;
 
             var template = QueryTemplates.GetTemplate(DataObject, ObjectFamilies.Witsml, Model.WitsmlVersion, Model.ReturnElementType);
-            XmlQuery.SetText(template.ToString(SaveOptions.OmitDuplicateNamespaces));
+            XmlQuery.SetText(template.ToString());
 
             // Reset drop down list
-            Runtime.InvokeAsync(() => DataObject = QueryTemplateText);
+            Runtime.InvokeAsync(() => { DataObject = QueryTemplateText; return Task.CompletedTask; });
         }
 
         /// <summary>
@@ -1001,6 +1001,7 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.ViewModels
                 Messages.Insert(
                     Messages.TextLength,
                     messageText ?? GetMessageText(now, xmlOut, suppMsgOut, returnCode));
+                return Task.CompletedTask;
             });
         }
 
@@ -1031,6 +1032,7 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.ViewModels
                         string.IsNullOrEmpty(queryText) ? "None" : string.Empty,
                         string.IsNullOrEmpty(queryText) ? string.Empty : queryText,
                         Environment.NewLine));
+                return Task.CompletedTask;
             });
         }
 
@@ -1058,6 +1060,7 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.ViewModels
                         action,
                         message,
                         Environment.NewLine));
+                return Task.CompletedTask;
             });
         }
 
@@ -1129,7 +1132,7 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.ViewModels
         private string GetFromStoreOptionsIn(bool isPartialQuery)
         {
             var model = GetModel();
-            var returnElements = string.IsNullOrWhiteSpace(model.ReturnElementType?.Value) ? string.Empty : model.ReturnElementType;
+            var returnElements = string.IsNullOrWhiteSpace(model.ReturnElementType?.ToString()) ? string.Empty : model.ReturnElementType?.ToString() ?? string.Empty;
 
             var optionsIn = new List<string>
             {
@@ -1192,6 +1195,15 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.ViewModels
                 returnCode,
                 string.IsNullOrEmpty(message) ? "None" : message,
                 Environment.NewLine);
+        }
+
+        /// <summary>
+        /// Handles SOAP message for logging purposes.
+        /// </summary>
+        /// <param name="message">The message to handle.</param>
+        public void HandleMessage(string message)
+        {
+            _log.Debug($"SOAP Message: {message}");
         }
     }
 }

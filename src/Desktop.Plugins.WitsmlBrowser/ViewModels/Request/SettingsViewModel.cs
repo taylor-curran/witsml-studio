@@ -23,9 +23,10 @@ using System.Threading.Tasks;
 using System.Windows;
 using Caliburn.Micro;
 using Energistics.DataAccess;
+using WitsmlFramework.ViewModels;
+using WitsmlFramework;
+using WitsmlFramework.Attributes;
 using PDS.WITSMLstudio.Connections;
-using PDS.WITSMLstudio.Desktop.Core.Runtime;
-using PDS.WITSMLstudio.Desktop.Core.ViewModels;
 
 namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.ViewModels.Request
 {
@@ -47,7 +48,7 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.ViewModels.Request
             Runtime = runtime;            
             DisplayName = "Settings";
             WitsmlVersions = new BindableCollection<string>();
-            ConnectionPicker = new ConnectionPickerViewModel(runtime, ConnectionTypes.Witsml)
+            ConnectionPicker = new ConnectionPickerViewModel(runtime, PDS.WITSMLstudio.Connections.ConnectionTypes.Witsml)
             {
                 AutoConnectEnabled = true,
                 OnConnectionChanged = OnConnectionChanged
@@ -134,7 +135,7 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.ViewModels.Request
         public void SelectOutputPath()
         {
             var info = new DirectoryInfo(Model.OutputPath);
-            var owner = new Win32WindowHandle(Application.Current.MainWindow);
+            var owner = new Win32WindowHandle(Application.Current.MainWindow?.GetHashCode() ?? 0);
             var dialog = new System.Windows.Forms.FolderBrowserDialog
             {
                 Description = "Select Output Path",
@@ -195,10 +196,9 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.ViewModels.Request
         /// <summary>
         /// Called when initializing the SettingsViewModel.
         /// </summary>
-        protected override void OnInitialize()
+        protected void OnInitialize()
         {
             _log.Debug("Initializing screen");
-            base.OnInitialize();
             Model.ReturnElementType = OptionsIn.ReturnElements.All;
             Runtime.OutputFolderPath = $"{Environment.CurrentDirectory}\\Data\\Results";            
         }
@@ -206,23 +206,23 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.ViewModels.Request
         /// <summary>
         /// Called when the selected connection has changed.
         /// </summary>
-        /// <param name="connection">The connection.</param>
-        private Task OnConnectionChanged(Connection connection)
+        private void OnConnectionChanged()
         {
-            Model.Connection = connection;
-
-            _log.DebugFormat("Selected connection changed: Name: {0}; Uri: {1}; Username: {2}",
-                Model.Connection.Name, Model.Connection.Uri, Model.Connection.Username);
-
-            // Make connection and get version
-            Runtime.ShowBusy();
-            Task.Run(() =>
+            if (ConnectionPicker.SelectedConnection != null)
             {
-                GetWitsmlVersions();
-                Runtime.ShowBusy(false);
-            });
+                Model.Connection = ConnectionPicker.SelectedConnection;
 
-            return Task.FromResult(true);
+                _log.DebugFormat("Selected connection changed: Name: {0}; Uri: {1}; Username: {2}",
+                    Model.Connection.Name, Model.Connection.Uri, Model.Connection.Username);
+
+                // Make connection and get version
+                Runtime.ShowBusy();
+                Task.Run(() =>
+                {
+                    GetWitsmlVersions();
+                    Runtime.ShowBusy("");
+                });
+            }
         }
 
         /// <summary>

@@ -1,0 +1,19 @@
+  Determining projects to restore...
+/home/ubuntu/repos/witsml-studio/src/Desktop.Plugins.WitsmlBrowser/Desktop.Plugins.WitsmlBrowser.csproj : warning NU1701: Package 'AvalonEdit 5.0.4' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net8.0-windows7.0'. This package may not be fully compatible with your project.
+  All projects are up-to-date for restore.
+/home/ubuntu/repos/witsml-studio/src/Desktop.Plugins.WitsmlBrowser/Desktop.Plugins.WitsmlBrowser.csproj : warning NU1701: Package 'AvalonEdit 5.0.4' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net8.0-windows7.0'. This package may not be fully compatible with your project.
+/home/ubuntu/repos/witsml-studio/modern-ext/WitsmlFramework/Functions.cs(141,18): error CS1003: Syntax error, ',' expected [/home/ubuntu/repos/witsml-studio/modern-ext/WitsmlFramework/WitsmlFramework.csproj]
+/home/ubuntu/repos/witsml-studio/modern-ext/WitsmlFramework/Functions.cs(141,19): error CS1513: } expected [/home/ubuntu/repos/witsml-studio/modern-ext/WitsmlFramework/WitsmlFramework.csproj]
+/home/ubuntu/repos/witsml-studio/modern-ext/WitsmlFramework/Functions.cs(239,1): error CS1022: Type or namespace definition, or end-of-file expected [/home/ubuntu/repos/witsml-studio/modern-ext/WitsmlFramework/WitsmlFramework.csproj]
+
+Build FAILED.
+
+/home/ubuntu/repos/witsml-studio/src/Desktop.Plugins.WitsmlBrowser/Desktop.Plugins.WitsmlBrowser.csproj : warning NU1701: Package 'AvalonEdit 5.0.4' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net8.0-windows7.0'. This package may not be fully compatible with your project.
+/home/ubuntu/repos/witsml-studio/src/Desktop.Plugins.WitsmlBrowser/Desktop.Plugins.WitsmlBrowser.csproj : warning NU1701: Package 'AvalonEdit 5.0.4' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net8.0-windows7.0'. This package may not be fully compatible with your project.
+/home/ubuntu/repos/witsml-studio/modern-ext/WitsmlFramework/Functions.cs(141,18): error CS1003: Syntax error, ',' expected [/home/ubuntu/repos/witsml-studio/modern-ext/WitsmlFramework/WitsmlFramework.csproj]
+/home/ubuntu/repos/witsml-studio/modern-ext/WitsmlFramework/Functions.cs(141,19): error CS1513: } expected [/home/ubuntu/repos/witsml-studio/modern-ext/WitsmlFramework/WitsmlFramework.csproj]
+/home/ubuntu/repos/witsml-studio/modern-ext/WitsmlFramework/Functions.cs(239,1): error CS1022: Type or namespace definition, or end-of-file expected [/home/ubuntu/repos/witsml-studio/modern-ext/WitsmlFramework/WitsmlFramework.csproj]
+    2 Warning(s)
+    3 Error(s)
+
+Time Elapsed 00:00:01.74

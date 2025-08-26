@@ -1,0 +1,12 @@
+  Determining projects to restore...
+/home/ubuntu/repos/witsml-studio/modern-ext/WitsmlFramework/WitsmlFramework.csproj(1,3): error MSB4025: The project file could not be loaded. The '<' character, hexadecimal value 0x3C, cannot be included in a name. Line 1, position 3.
+/home/ubuntu/repos/witsml-studio/modern-ext/WitsmlFramework/WitsmlFramework.csproj(1,3): error MSB4025: The project file could not be loaded. The '<' character, hexadecimal value 0x3C, cannot be included in a name. Line 1, position 3.
+
+Build FAILED.
+
+/home/ubuntu/repos/witsml-studio/modern-ext/WitsmlFramework/WitsmlFramework.csproj(1,3): error MSB4025: The project file could not be loaded. The '<' character, hexadecimal value 0x3C, cannot be included in a name. Line 1, position 3.
+/home/ubuntu/repos/witsml-studio/modern-ext/WitsmlFramework/WitsmlFramework.csproj(1,3): error MSB4025: The project file could not be loaded. The '<' character, hexadecimal value 0x3C, cannot be included in a name. Line 1, position 3.
+    0 Warning(s)
+    2 Error(s)
+
+Time Elapsed 00:00:00.81

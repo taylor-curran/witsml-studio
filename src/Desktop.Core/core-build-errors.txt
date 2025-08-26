@@ -1,0 +1,9 @@
+/home/ubuntu/repos/witsml-studio/src/Desktop.Core/Desktop.Core.csproj(24,3): error MSB4025: The project file could not be loaded. Unexpected end tag. Line 24, position 3.
+
+Build FAILED.
+
+/home/ubuntu/repos/witsml-studio/src/Desktop.Core/Desktop.Core.csproj(24,3): error MSB4025: The project file could not be loaded. Unexpected end tag. Line 24, position 3.
+    0 Warning(s)
+    1 Error(s)
+
+Time Elapsed 00:00:00.03

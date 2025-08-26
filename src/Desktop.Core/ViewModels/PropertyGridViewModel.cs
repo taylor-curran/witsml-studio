@@ -21,6 +21,7 @@ using Caliburn.Micro;
 using Energistics.DataAccess;
 using PDS.WITSMLstudio.Desktop.Core.Models;
 using PDS.WITSMLstudio.Desktop.Core.Runtime;
+using WitsmlFramework;
 
 namespace PDS.WITSMLstudio.Desktop.Core.ViewModels
 {
@@ -35,7 +36,7 @@ namespace PDS.WITSMLstudio.Desktop.Core.ViewModels
         /// </summary>
         /// <param name="runtime">The runtime service.</param>
         /// <param name="objectData">The object data view model.</param>
-        public PropertyGridViewModel(IRuntimeService runtime, DataGridViewModel objectData = null)
+        public PropertyGridViewModel(IRuntimeService runtime, WitsmlFramework.ViewModels.DataGridViewModel objectData = null)
         {
             Runtime = runtime;
             ObjectData = objectData;
@@ -51,7 +52,7 @@ namespace PDS.WITSMLstudio.Desktop.Core.ViewModels
         /// Gets the object data view model.
         /// </summary>
         /// <value>The object data view model.</value>
-        public DataGridViewModel ObjectData { get; }
+        public WitsmlFramework.ViewModels.DataGridViewModel ObjectData { get; }
 
         private object _currentObject;
 

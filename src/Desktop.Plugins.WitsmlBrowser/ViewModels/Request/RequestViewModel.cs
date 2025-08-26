@@ -21,8 +21,9 @@ using System.Linq;
 using Caliburn.Micro;
 using Energistics.DataAccess;
 using PDS.WITSMLstudio.Framework;
-using PDS.WITSMLstudio.Desktop.Core.Runtime;
-using PDS.WITSMLstudio.Desktop.Core.ViewModels;
+using WitsmlFramework.ViewModels;
+using WitsmlFramework;
+using WitsmlFramework.Attributes;
 
 namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.ViewModels.Request
 {
@@ -174,16 +175,17 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.ViewModels.Request
             //Items.Add(new TemplatesViewModel());
             Items.Add(new QueryViewModel(Runtime, XmlQuery));
 
-            ActivateItem(Items.FirstOrDefault());
+            if (Items.Any())
+            {
+            }
         }
 
         /// <summary>
         /// Called when initializing the request view model.
         /// </summary>
-        protected override void OnInitialize()
+        protected void OnInitialize()
         {
             _log.Debug("Initializing screen");
-            base.OnInitialize();
             LoadScreens();
         }
     }

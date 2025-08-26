@@ -29,6 +29,8 @@ using PDS.WITSMLstudio.Connections;
 using PDS.WITSMLstudio.Framework;
 using PDS.WITSMLstudio.Desktop.Core.Properties;
 using PDS.WITSMLstudio.Desktop.Core.Runtime;
+using WitsmlFramework;
+using WitsmlFramework.Extensions;
 
 namespace PDS.WITSMLstudio.Desktop.Core.ViewModels
 {
@@ -48,7 +50,7 @@ namespace PDS.WITSMLstudio.Desktop.Core.ViewModels
         /// </summary>
         /// <param name="runtime">The runtime.</param>
         /// <param name="connectionType">The connection type.</param>
-        public ConnectionPickerViewModel(IRuntimeService runtime, ConnectionTypes connectionType)
+        public ConnectionPickerViewModel(IRuntimeService runtime, ConnectionType connectionType)
         {
             Runtime = runtime;
             ConnectionType = connectionType;
@@ -65,7 +67,7 @@ namespace PDS.WITSMLstudio.Desktop.Core.ViewModels
         /// Gets the type of the connection.
         /// </summary>
         /// <value>The type of the connection.</value>
-        public ConnectionTypes ConnectionType { get; }
+        public ConnectionType ConnectionType { get; }
 
         /// <summary>
         /// Gets or sets a value indicating whether auto connect is enabled.
