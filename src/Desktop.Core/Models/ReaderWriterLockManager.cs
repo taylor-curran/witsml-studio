@@ -100,7 +100,7 @@ namespace PDS.WITSMLstudio.Desktop.Core.Models
         /// <param name="instance">The object instance.</param>
         /// <param name="action">The action to execute.</param>
         /// <returns></returns>
-        public static void ExecuteWithReadLock(this object instance, Action action)
+        public static void ExecuteWithReadLock(this object instance, System.Action action)
         {
             var readLock = GetLock(instance);
 
@@ -153,7 +153,7 @@ namespace PDS.WITSMLstudio.Desktop.Core.Models
         /// <param name="timeout">The timeout.</param>
         /// <param name="action">The action to execute.</param>
         /// <returns></returns>
-        public static bool TryExecuteWithReadLock(this object instance, TimeSpan timeout, Action action)
+        public static bool TryExecuteWithReadLock(this object instance, TimeSpan timeout, System.Action action)
         {
             var readLock = GetLock(instance);
 
@@ -201,7 +201,7 @@ namespace PDS.WITSMLstudio.Desktop.Core.Models
         /// <param name="instance">The object instance.</param>
         /// <param name="action">The action to execute.</param>
         /// <returns></returns>
-        public static void ExecuteWithWriteLock(this object instance, Action action)
+        public static void ExecuteWithWriteLock(this object instance, System.Action action)
         {
             var readLock = GetLock(instance);
 
@@ -254,7 +254,7 @@ namespace PDS.WITSMLstudio.Desktop.Core.Models
         /// <param name="timeout">The timeout.</param>
         /// <param name="action">The action to execute.</param>
         /// <returns></returns>
-        public static bool TryExecuteWithWriteLock(this object instance, TimeSpan timeout, Action action)
+        public static bool TryExecuteWithWriteLock(this object instance, TimeSpan timeout, System.Action action)
         {
             var readLock = GetLock(instance);
 
@@ -280,7 +280,7 @@ namespace PDS.WITSMLstudio.Desktop.Core.Models
         /// <param name="context">The context object.</param>
         /// <param name="accessMethod">The access method.</param>
         /// <param name="writeAccess">Whether access is read or write.</param>
-        public static void SynchronizeReadWriteAccess(IEnumerable collection, object context, Action accessMethod, bool writeAccess)
+        public static void SynchronizeReadWriteAccess(IEnumerable collection, object context, System.Action accessMethod, bool writeAccess)
         {
             if (writeAccess)
                 collection.ExecuteWithWriteLock(accessMethod);

@@ -28,6 +28,24 @@ using WitsmlFramework;
 using WitsmlFramework.Attributes;
 using PDS.WITSMLstudio.Connections;
 
+internal static class Win32WindowHandleExtensions
+{
+    public static System.Windows.Forms.IWin32Window AsIWin32Window(this Win32WindowHandle handle)
+    {
+        return new Win32WindowWrapper(handle.Handle);
+    }
+    
+    private class Win32WindowWrapper : System.Windows.Forms.IWin32Window
+    {
+        public IntPtr Handle { get; }
+        
+        public Win32WindowWrapper(IntPtr handle)
+        {
+            Handle = handle;
+        }
+    }
+}
+
 namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.ViewModels.Request
 {
     /// <summary>
@@ -143,7 +161,7 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.WitsmlBrowser.ViewModels.Request
                 ShowNewFolderButton = true,
             };
 
-            if (dialog.ShowDialog(owner) == System.Windows.Forms.DialogResult.OK)
+            if (dialog.ShowDialog(owner.AsIWin32Window()) == System.Windows.Forms.DialogResult.OK)
             {
                 Model.OutputPath = dialog.SelectedPath;
                 Runtime.OutputFolderPath = Model.OutputPath;
